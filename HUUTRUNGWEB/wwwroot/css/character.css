@@ -1,0 +1,225 @@
+﻿
+.title_character {
+    font-family: Verdana,Arial,fantasy;
+    text-align: left;
+    font-weight: 600 !important;
+    font-size: 2.5em;
+}
+.character {
+    display: flex; /* Sử dụng flexbox để căn giữa */
+    flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+    align-items: center; /* Căn giữa các phần tử theo chiều ngang */
+    flex: 0 0 auto; /* Ngăn hình ảnh co giãn, giữ kích thước cố định */
+    margin: 5px; /* Khoảng cách giữa các hình ảnh */
+}
+
+    .character p {
+        font-weight: 600 !important;
+        font-size: 1.8em;
+        text-align: center; /* Căn giữa chữ dưới hình ảnh */
+        flex-shrink: 0; /* Đảm bảo không co lại khi cuộn */      
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-family: Verdana, Arial, fantasy;
+        margin: 0; /* Gỡ bỏ margin mặc định */
+        line-height: 1.2; /* Khoảng cách giữa các dòng */
+        max-height: 70px; /* Đặt chiều cao tối đa cho phần tên nhân vật */
+        overflow: hidden; /* Ẩn phần thừa ra ngoài */
+        white-space: normal; /* Cho phép văn bản xuống dòng */
+    }
+
+
+
+.image-scrolling-container {
+    overflow-x: auto; /* Cho phép cuộn ngang */
+    white-space: nowrap; /* Giữ cho các hình ảnh trong cùng một hàng */
+    width: 100%; /* Chiều rộng của container */
+    padding: 5px; /* Tùy chọn: khoảng cách bên trong */
+    justify-content: center;
+}
+
+.image-scroll {
+    display: flex; /* Sử dụng flexbox để giữ các item trong cùng một hàng */
+    flex-wrap: nowrap; /* Đảm bảo không có hình ảnh nào bị xuống hàng */
+
+}
+
+
+.carousel-indicators button {
+    width: max-content !important;
+}
+
+.carousel-indicators {
+    position: unset;
+}
+
+.carousel-caption {
+    padding: 10px;
+    max-width: 500px; /* Giới hạn chiều rộng của phần caption */
+}
+
+.carousel-caption h2 {
+    font-size: 4rem;
+    color: #FFFFFF; /* Màu chữ */
+}
+
+.carousel-caption p {
+    font-size: 1.5rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 1000;
+}
+
+.carousel-caption a {
+    font-size: 1.3rem;
+    padding: 10px 0px;
+    font-weight: 300;
+    color: #333; /* Màu chữ của nút */
+    background-color: #FFFFFF; /* Màu nền của nút */
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+.carousel-caption a:hover {
+    color: #FFFFFF; /* Màu chữ khi hover */
+    background-color: #007bff; /* Màu nền khi hover, có thể đổi thành mã màu xanh bạn muốn */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.filter-section {
+    border-right: 1px solid #ddd;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 0;
+    font-weight: bold; 
+}
+    .filter-header h4 {
+        font-family: Verdana,Arial,fantasy;
+        font-weight: 600 !important;
+        font-size: 2.3em;
+    }
+.custom-label {
+    
+    font-size: 1.8rem;
+    font-weight: normal;
+    text-decoration: none !important;
+    /*color: #007bff;*/ /* Màu xanh dương */
+    cursor: pointer; /* Thay đổi con trỏ khi di chuột qua */
+    margin-bottom: 0.5rem; /* Khoảng cách bên dưới */
+}
+.toggle-icon {
+    font-size: 1.25em;
+}
+
+
+
+.character-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.character-card h5 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.title_name  {
+    text-align: left;
+    margin-top: 15px;  
+    padding-top:20px;
+    padding-bottom:20px;
+    font-family: Verdana,Arial,fantasy;
+    margin: 0; /* Gỡ bỏ margin mặc định */
+    font-size: 1.5rem;
+    font-weight: bold;
+    max-height: 70px; /* Đặt chiều cao tối đa cho phần tên nhân vật */
+    overflow: hidden; /* Ẩn phần thừa ra ngoài */
+    white-space: normal; /* Cho phép văn bản xuống dòn*/
+}
+
+.sort-menu-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.sort-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.sort-button {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sort-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .sort-dropdown a {
+        font-size:15px;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .sort-dropdown a:hover {
+            background-color: #f1f1f1;
+        }
+
+.sort-menu:hover .sort-dropdown {
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.community-links a {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.7em;
+    color: #0074e8;
+    font-weight: 700;
+    text-decoration: none;
+}
+.community-links h4 {
+    font-weight: 600 !important;
+    
+}
+
+/*
+.community-links a:hover {
+    text-decoration: underline;
+}*/
+    .comunity p {
+    font-family: Verdana,Arial,fantasy;    
+    font-weight: 600 !important;
+    font-size: 1.35em;
+}
+
