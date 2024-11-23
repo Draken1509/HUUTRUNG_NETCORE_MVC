@@ -3,7 +3,7 @@
 <h4>1.Technology</h4> <p>ASP.NET Core MVC, Entity Framework Core and ASP.NET Core Identity.</p>
 <h4>2.Techniques applied to the project</h4>
 <p>
-  - N-Tier Architecture 
+  - N-Tier Architecture <br>
   - Repository Pattern and UnitOfWork 
   - TempData/ViewBag/ViewData in NET.core
   - SweetAlerts, Rich Text Editor and DataTables with .NET core
