@@ -6,12 +6,17 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);
 
-body {
-  font-family: 'Roboto', sans-serif;
-  position: relative;
-  font-weight:400px;
-}
 
+
+html {
+	font-family: : "Oswald", Verdana, Arial, fantasy;
+	position: relative;
+	font-weight: 400;
+	font-size: 10px; /* Cỡ chữ mặc định */
+}
+img {
+	cursor: pointer;
+}
 ul li {
   list-style: none;
 }

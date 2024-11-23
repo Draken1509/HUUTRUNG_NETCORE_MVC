@@ -1,0 +1,210 @@
+﻿
+@model ComicVM_C
+<style>
+
+    .img-detail-character {
+
+        width: 100%;
+        max-height:500px;
+  
+    }
+    .main-text-detail-character {
+        font-size: 1rem;
+        font-weight:500;
+
+    }
+    .sub-text-detail-character {
+        font-size: 1rem;
+        background-color: #f5f5f5;
+        padding: 30px;
+        font-weight: 500;
+    }
+        .sub-text-detail-character dt {
+            font-weight: bold;
+
+        }
+</style>
+
+
+<div class="container-fuild my-1">
+    @* Detail Comic *@
+  <div class="container">
+        <div class="row">
+            <!-- Cột chứa hình ảnh -->
+            <div class="col-md-3">
+                <img src="~/@Model.Comic.Thumbnail" alt="Superman Image" class="img-detail-character w-100">
+            </div>
+
+            <!-- Cột chứa thông tin chi tiết -->
+            <div class="col-md-7">
+                <p class="fw-bold text-uppercase">@Model.Comic.TypeComic.Name</p>
+                <h1 class="heading text-uppercase" style="font-size:2rem !important">@Model.Comic.Name</h1>
+                <br><br>
+                <p class="main-text-detail-character">
+                       @Html.Raw( @Model.Comic.Description )
+                </p>
+                <h1  class=" heading  text-uppercase"> <span>Price:</span> @Model.Comic.Price $</h1>
+                <form class="mt-4 mb-2" method="post">
+                    <div class="row">
+                        <div class="col-md-4 d-flex align-items-center">
+                            <label for="quantity" class="me-2">Quantity</label>
+                            <input  id="quantity" type="number" class="form-control text-center" placeholder="Quantity" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <a asp-action="Index" class="btn btn-secondary w-100">Back</a>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Cột trống -->
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+    <div class=" mt-4 sub-text-detail-character" style="display: flex; justify-content: center; align-items: center ">
+        <div class="container row ms-5 ">
+          <div class="col-md-6">
+              <dl class="row">
+                        <dt class="col-sm-4">Writer:</dt>
+                <dd class="col-sm-8">@Model.Comic.Writer</dd>
+                        <dt class="col-sm-4">Art by:</dt>
+                <dd class="col-sm-8">ACTION COMICS #1 (1938)</dd>   
+                        <dt class="col-sm-4">Series:</dt>
+                <dd class="col-sm-8">Clark Kent, Kal-El</dd>                          
+              </dl>
+            </div>
+            <div class="col-md-6">
+              <dl class="row">
+                <dt class="col-sm-4">U.S. Price:</dt>
+                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+
+                <dt class="col-sm-4">On Sale Date:</dt>
+                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+
+                <dt class="col-sm-4">Page Count:</dt>
+                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+
+                <dt class="col-sm-4">Rated:</dt>
+                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+              </dl>
+            </div>
+        </div>
+  </div>
+
+    @*MORE FROM THIS SERIES *@
+  <div class="container mt-5">
+    <div class="justify-content-between align-items-center mb-4">
+            <h1 class="heading">MORE FROM THIS SERIES</h1>
+    </div>
+    <div class="text-center">
+        <!-- Nội dung bên dưới không bị chia đều -->
+        <div class="submenu">
+            <div class="container swiper">
+                <div class="card-wrapper card-wrapper-5">
+                    <ul class="card-list swiper-wrapper">
+                        @foreach (var obj in Model.ComicRelatedSeriesList)
+                        {
+                            <li class="card-item swiper-slide">
+                                <div class="card border-0 shadow rounded h-100">
+                                    <img src="~/@obj.Thumbnail" class="card-img-top rounded">
+                                    <div class="card-body d-flex flex-column">
+                                        <p class="card-title fw-bold text-dark opacity-75 text-uppercase text-center mb-2">
+                                            @obj.Price$
+                                        </p>
+                                        <div style="height:10vh">
+                                            <p class=" card-title fw-bold text-center flex-grow-1">
+                                                @obj.Name
+                                            </p>
+                                        </div>
+
+                                        <div class="btn-container mt-auto">
+                                                <a asp-route-comicId="@obj.Id" asp-action="Details" class="btn btn-primary bg-gradient border-0 w-100">
+                                                Detail
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-slide-button swiper-button-prev"></div>
+                    <div class="swiper-slide-button swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @*galary *@
+    <section id="galary">
+            <div class=" container">
+                <div class="justify-content-between align-items-center mb-3">
+                    <h2 class="heading mt-5 mb-5"> CAPTAN BOOMERANG GALLERY</h2>
+                </div>
+            </div>        
+            <div class="carousel slide"
+                 id="carouselDemo"
+                 data-bs-wrap="true"
+                 data-bs-ride="carousel">
+                <div class="carousel-inner" style="max-height:400px">
+
+                    <div class="carousel-item active" style="max-height: 400px;">
+                        <img src="~/images/thumb-1920-1148436.jpg" class="w-100" style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-start justify-content-center text-start">
+                            <h2 class="display-5 fw-bold text-uppercase">Robin</h2>
+                            <p class="lead">Trained from birth as the ultimate killing machine, Cassandra Cain found a new life as the fourth Batgirl.</p>
+                            <a href="#" class="btn btn-light rounded-pill fw-bold px-4 py-2">GET TO KNOW <span> CASS</span> </a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item " style="max-height: 400px;">
+                        <img src="~/images/Cassandra.jpg" class="w-100" style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-start justify-content-center text-start">
+                            <h2 class="display-5 fw-bold text-uppercase">Cassandra Cain</h2>
+                            <p class="lead">Trained from birth as the ultimate killing machine, Cassandra Cain found a new life as the fourth Batgirl.</p>
+                            <a href="#" class="btn btn-light rounded-pill fw-bold px-4 py-2">GET TO KNOW <span> CASS</span> </a>
+                        </div>
+                    </div>
+                    <div class="carousel-item " style="max-height: 400px;">
+                        <img src="~/images/thumb-1920-1148436.jpg" class="w-100" style="object-fit: cover;">
+                        <div class="carousel-caption d-flex flex-column align-items-start justify-content-center text-start">
+                            <h2 class="display-5 fw-bold text-uppercase">Cassandra Cain</h2>
+                            <p class="lead">Trained from birth as the ultimate killing machine, Cassandra Cain found a new life as the fourth Batgirl.</p>
+                            <a href="#" class="btn btn-light rounded-pill fw-bold px-4 py-2">GET TO KNOW <span> CASS</span> </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <button class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#carouselDemo"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#carouselDemo"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </section>
+    <div class="container"> <p style="font-style:italic; " class="fs-3 m-5">The information contained on this website is for general information purposes only and may not be accurate, complete, or up-to-date.</p></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="~/js/slider.js"></script>
+
+
+
