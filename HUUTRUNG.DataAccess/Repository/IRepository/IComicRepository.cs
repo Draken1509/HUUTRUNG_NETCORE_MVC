@@ -9,7 +9,7 @@ namespace HUUTRUNG.DataAccess.Repository.IRepository
 {
     public interface IComicRepository : IRepository<Comic>
     {
-        void Update(Comic obj);
+        Task UpdateAsync(Comic obj);
         //void Save();
     }
 }

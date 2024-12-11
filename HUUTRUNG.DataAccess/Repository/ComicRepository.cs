@@ -17,17 +17,12 @@ namespace HUUTRUNG.DataAccess.Repository
 		private readonly ApplicationDbContext _db;	
 		public ComicRepository(ApplicationDbContext db):base(db) {
 			_db = db;			
-		}
-		//public void Save()
-		//{
-		//	_db.SaveChanges();
-		//}
-		public void Update(Comic obj)
+		}	
+		public async Task UpdateAsync(Comic obj)
 		{
-            var objFromDb = _db.Comics.FirstOrDefault(c => c.Id == obj.Id);
+            var objFromDb = await _db.Comics.FirstOrDefaultAsync(c => c.Id == obj.Id);
             if (objFromDb != null)
-            {
-                // Cập nhật từng thuộc tính
+            {            
                 objFromDb.Name = obj.Name;
                 objFromDb.Writer = obj.Writer;
                 objFromDb.ArtBy = obj.ArtBy;
@@ -48,9 +43,8 @@ namespace HUUTRUNG.DataAccess.Repository
                 if (obj.Thumbnail !=null)
                 {
                     objFromDb.Thumbnail = obj.Thumbnail;
-                }            
-                // Lưu thay đổi vào database
-                _db.SaveChanges();
+                }                        
+                _db.SaveChangesAsync();
             }
             else
             {

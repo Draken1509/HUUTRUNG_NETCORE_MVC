@@ -27,28 +27,28 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Comic> objTypeComicList =
-                _unitOfWork.Comic.GetAll(includeProperties: "TypeComic").ToList();  
+            IEnumerable<Comic> objTypeComicList = 
+			await _unitOfWork.Comic.GetAllAsync(includeProperties: "TypeComic");
             return View(objTypeComicList);
         }
       
-        public IActionResult Upsert(int? id)
+        public async Task<IActionResult> Upsert(int? id)
         {
             //ViewBag.TypeComicList = TypeComicList
             //ViewData["TypeComicList"]= TypeComicList
 
             ComicVM comicVM = new()
             {
-                TypeComicList = _unitOfWork.TypeComic
-                .GetAll().Select(u => new SelectListItem
+                TypeComicList = (await _unitOfWork.TypeComic.GetAllAsync())
+				.Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
-                SeriesList = _unitOfWork.Series
-                .GetAll().Select(u => new SelectListItem
+                SeriesList =  (await _unitOfWork.Series
+                .GetAllAsync()).Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
@@ -61,7 +61,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
             }
             else
             {
-                comicVM.Comic = _unitOfWork.Comic.Get(u => u.Id == id);
+                comicVM.Comic = await _unitOfWork.Comic.GetAsync(u => u.Id == id);
 				if (comicVM.Comic.OnSaleDate != null)
 				{
                     ViewData["OnSaleDate"] = comicVM.Comic.OnSaleDate.Value.ToString("yyyy-MM-dd");
@@ -78,7 +78,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         }
 
         [HttpPost]
-		public IActionResult Upsert(ComicVM comicVM, IFormFile? file)
+		public  async Task <IActionResult> Upsert(ComicVM comicVM, IFormFile? file)
 		{			
 			if (ModelState.IsValid)
 			{			
@@ -104,10 +104,10 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 					}
 						bool isNew = comicVM.Comic.Id == 0; // Flag để kiểm tra nếu là tạo mới hay cập nhật
 						if (isNew){
-							_unitOfWork.Comic.Add(comicVM.Comic); // Tạo mới
+							 await _unitOfWork.Comic.AddAsync(comicVM.Comic); // Tạo mới
 						}
 						else{
-							_unitOfWork.Comic.Update(comicVM.Comic); // Cập nhật
+							await _unitOfWork.Comic.UpdateAsync(comicVM.Comic); // Cập nhật
 						}					
 					 _unitOfWork.Save();  // Lưu vào cơ sở dữ liệu 													
 					 TempData["success"] = isNew ? "Comic created successfully" : "Comic updated successfully"; //Thêm thông báo thành công vào TempData để hiển thị trong view
@@ -120,11 +120,11 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 			}
 			else{
 				// Nếu ModelState không hợp lệ, tải lại danh sách các thể loại comic để hiển thị lại form
-				comicVM.TypeComicList = _unitOfWork.TypeComic.GetAll().Select(u => new SelectListItem{
+				comicVM.TypeComicList =  (await _unitOfWork.TypeComic.GetAllAsync()).Select(u => new SelectListItem{
 					Text = u.Name,
 					Value = u.Id.ToString()
 				}); // Trả về lại view với model comicVM chứa danh sách các thể loại
-                comicVM.SeriesList = _unitOfWork.Series.GetAll().Select(u => new SelectListItem
+                comicVM.SeriesList = (await _unitOfWork.Series.GetAllAsync()).Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
@@ -192,17 +192,17 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 
 		#region api call
 		[HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-			List<Comic> objTypeComicList =
-			   _unitOfWork.Comic.GetAll(includeProperties: "TypeComic").ToList();
+			IEnumerable<Comic> objTypeComicList = 
+				await _unitOfWork.Comic.GetAllAsync(includeProperties: "TypeComic");
 			return Json(new {data = objTypeComicList });
 		}
 
         [HttpPost]
-        public IActionResult UpdateIsNew(int id, bool isNew)
+        public async Task <IActionResult> UpdateIsNew(int id, bool isNew)
         {
-			Comic comic = _unitOfWork.Comic.Get(u => u.Id == id);
+			Comic comic =  await _unitOfWork.Comic.GetAsync(u => u.Id == id);
             if (comic != null)
             {
                 comic.IsNew = isNew;
@@ -212,9 +212,9 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
             return Json(new { success = false, message = "Comic not found" });
         }
 
-        public IActionResult Delete(int ?id)
+        public async Task<IActionResult> Delete(int ?id)
         {
-            var comicToBeDeleted = _unitOfWork.Comic.Get(u => u.Id == id);
+            var comicToBeDeleted =  await _unitOfWork.Comic.GetAsync(u => u.Id == id);
             if(comicToBeDeleted==null)
             {
                 return Json(new { success=false, message="Error while deleting" });

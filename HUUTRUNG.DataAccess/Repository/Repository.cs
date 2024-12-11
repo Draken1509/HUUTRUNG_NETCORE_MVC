@@ -27,11 +27,11 @@ namespace HUUTRUNG.DataAccess.Repository
 			this.dbSet= _db.Set<T>();
 			_db.Comics.Include(u => u.TypeComic).Include(u=>u.TypeComicId);  // lấy thêm dữ liệu từ bảng TypeComic, nếu muốn lấy thêm bảng thì cứ Include
         }
-        public void Add(T entity)
-		{
-			dbSet.Add(entity);
-		}
-		public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
+        public async Task AddAsync(T entity)
+        {
+            await dbSet.AddAsync(entity);
+        }
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
 		{
             IQueryable<T> query;
             if (tracked){
@@ -49,11 +49,9 @@ namespace HUUTRUNG.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
-
-
-		public IEnumerable<T> GetAll(string ? includeProperties=null)
+		public async Task<IEnumerable<T>> GetAllAsync(string ? includeProperties=null)
 		{
             IQueryable<T> query = dbSet;
             if (!string.IsNullOrEmpty(includeProperties))
@@ -69,9 +67,9 @@ namespace HUUTRUNG.DataAccess.Repository
 			{
 				throw new InvalidOperationException("The DbSet is not initialized.");
 			}			
-			return query.ToList();
+			return await query.ToListAsync();
 		}
-		public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, string? includeProperties = null)
+		public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
 		{
 			IQueryable<T> query = dbSet;
 			
@@ -84,23 +82,21 @@ namespace HUUTRUNG.DataAccess.Repository
 				{
 					query = query.Include(includeProp);
 				}
-
 			}
 			if (dbSet == null)
 			{
 				throw new InvalidOperationException("The DbSet is not initialized.");
-			}
-		
-			return query.ToList();
+			}		
+			return  await query.ToListAsync();
 		}
-
-		public void Remove(T entity)
+		public async Task Remove(T entity)
 		{
 			dbSet.Remove(entity);
-		}			
-		public void RemoveRange(IEnumerable<T> entity)
+		}     
+        public async Task RemoveRange(IEnumerable<T> entity)
 		{
 			dbSet.RemoveRange(entity);
-		}		
-	}
+		}
+        
+    }
 }
