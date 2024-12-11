@@ -20,6 +20,14 @@ namespace HUUTRUNG.DataAccess.Repository
         public IComicRepository Comic { get; private set; }
         public ITypeComicRepository TypeComic { get; private set; }
         public ISeriesRepository Series { get; private set; }
+        public ICompanyRepository Company { get; private set; }
+        public IShoppingCartRepository ShoppingCart { get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+		public IOrderDetailRepository OrderDetail { get; private set; }
+		public IOrderHeaderRepository OrderHeader { get; private set; }
+		public INewsRepository News { get; private set; }
+        public ITypeNewsRepository TypeNews { get; private set; }
+
 
         public UnitOfWork (ApplicationDbContext db)
 		{
@@ -29,6 +37,13 @@ namespace HUUTRUNG.DataAccess.Repository
             Comic= new ComicRepository(_db);
             TypeComic = new TypeComicRepository(_db);
             Series = new SeriesRepository(_db);
+			Company = new CompanyRepository(_db);
+            ShoppingCart = new ShoppingCartRepository(_db);
+		    ApplicationUser = new ApplicationUserRepository(_db);
+			OrderDetail = new OrderDetailRepository(_db);
+			OrderHeader = new OrderHeaderRepository(_db);
+			News = new NewsRepository(_db);
+            TypeNews = new TypeNewsRepository(_db);
         }
 		
 		public void Save()

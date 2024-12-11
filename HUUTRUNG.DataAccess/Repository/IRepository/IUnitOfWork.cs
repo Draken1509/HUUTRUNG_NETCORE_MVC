@@ -13,6 +13,14 @@ namespace HUUTRUNG.DataAccess.Repository.IRepository
 		IComicRepository Comic { get; }
         ITypeComicRepository TypeComic { get; }
         ISeriesRepository Series { get; }
+        ICompanyRepository Company { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+        IApplicationUserRepository ApplicationUser { get; }
+		IOrderDetailRepository OrderDetail { get; }
+		IOrderHeaderRepository OrderHeader { get; }
+		INewsRepository News { get; }
+        ITypeNewsRepository TypeNews { get; }
         void Save();
+
 	}
 }

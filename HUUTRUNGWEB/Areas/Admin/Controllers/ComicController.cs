@@ -10,10 +10,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using HUUTRUNG.Models.ViewModel.Admin;
+using Microsoft.AspNetCore.Authorization;
+using HUUTRUNG.Utility;
 
 namespace HUUTRUNGWEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
+	[Authorize(Roles =SD.Role_Admin)]
     public class ComicController : Controller
     {
         //private readonly IComicRepository _unitOfWork;
@@ -27,10 +30,9 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Comic> objTypeComicList =
-                _unitOfWork.Comic.GetAll(inclueProperties: "TypeComic").ToList();  
+                _unitOfWork.Comic.GetAll(includeProperties: "TypeComic").ToList();  
             return View(objTypeComicList);
         }
-
       
         public IActionResult Upsert(int? id)
         {
@@ -132,8 +134,6 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 			}
 		}
 
-
-
 		//action name: edit
 		//public IActionResult Edit(int? id)  //? can null
 		//{
@@ -195,7 +195,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
 			List<Comic> objTypeComicList =
-			   _unitOfWork.Comic.GetAll(inclueProperties: "TypeComic").ToList();
+			   _unitOfWork.Comic.GetAll(includeProperties: "TypeComic").ToList();
 			return Json(new {data = objTypeComicList });
 		}
 

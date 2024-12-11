@@ -4,10 +4,13 @@ using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.Models;
 
 using Microsoft.AspNetCore.Mvc;
+using HUUTRUNG.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HUUTRUNGWEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         //private readonly ICategoryRepository _unitOfWork;

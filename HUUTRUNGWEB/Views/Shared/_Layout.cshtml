@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor   
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -18,8 +20,16 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 	<!-- DataTables CSS -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" />
+	<script src="https://cdn.tiny.cloud/1/t94iflximzuda7ur3fg3o1httnz6id1nn5a9w4pnnh4n9b2n/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+	<!-- google fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+
 	<!-- Các file CSS tùy chỉnh của tôi -->
 	<link href="~/css/navbar.css" asp-append-version="true" rel="stylesheet">
+	 <link href="~/css/main.css" rel="stylesheet" asp-append-version="true"> 
 	<link href="~/css/character.css" rel="stylesheet" asp-append-version="true">
 	<link href="~/css/home.css" rel="stylesheet" asp-append-version="true">
 
@@ -36,7 +46,7 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-					<ul class="navbar-nav flex-grow-1">
+					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="Customer" asp-controller="Characters" asp-action="Index">CHARACTERS</a>
 						</li>
@@ -57,33 +67,37 @@
 							<a class="nav-link text-dark" asp-area="Customer" asp-controller="Characters" asp-action="DetailCharacter">GAME</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">NEWS</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link text-dark">CONTENT MANAGEMANT</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">CATEGORY</a></li>
-								<li><a class="dropdown-item" asp-area="Admin" asp-controller="Comic" asp-action="Index">COMIC</a></li>
-								<li><a class="dropdown-item"  href="#">SERIES</a></li>
-								<li><a class="dropdown-item" asp-area="Admin" asp-controller="Character" asp-action="Index">CHARACTER</a></li>
-								<li><a class="dropdown-item" href="#">ALIGNMENT</a></li>
-							</ul>
+							<a class="nav-link text-dark" asp-area="Customer" asp-controller="News" asp-action="Index">NEWS</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">SHOP</a>
-						</li>			
-						<ul class="navbar-nav ms-auto">
-							<!-- Đẩy sang bên phải -->
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">LOGIN</a>
+							<a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
+						</li>
+						@if (User.IsInRole(SD.Role_Admin))
+						{
+							<li class="nav-item dropdown">
+								<a class="nav-link text-dark">CONTENT MANAGEMANT</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">CATEGORY</a></li>
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index">COMPANY</a></li>
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="Comic" asp-action="Index">COMIC</a></li>
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="News" asp-action="Index">NEWS</a></li>
+									<li><a class="dropdown-item" href="#">SERIES</a></li>
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="Character" asp-action="Index">CHARACTER</a></li>
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="Order" asp-action="Index">MANAGE ORDER</a></li>
+									<li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">CREATE USER</a></li>
+									<li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">MANAGE USER</a></li>
+								</ul>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" href="#">
-									<i class="bi bi-cart"></i> <!-- Biểu tượng giỏ hàng -->
-								</a>
-							</li>
-						</ul>
+						}
+				
+					 	<li class="nav-item">
+					 		<a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+					 			@await Component.InvokeAsync("ShoppingCart")
+					 		</a>
+					 	</li>
+						
 					</ul>
+					<partial name="_LoginPartial" />
 				</div>
 			</div>
 		</nav>
@@ -95,9 +109,8 @@
 				@RenderBody()		
 		</div>
 	</section>
-	@if (ViewContext.RouteData.Values["Controller"].ToString() != "Category")
-	{
-		<footer class="footer">
+	
+		<footer class="footer mt-5">
 			<div class="container mt-5">
 				<div class="row">
 					<div class="col-12">
@@ -117,8 +130,7 @@
 				</div>
 			</div>
 		</footer>
-	}
-
+	@* } *@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js" asp-append-version="true"></script> <!-- DataTables -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap, cần jQuery trước nếu dùng tính năng jQuery -->	

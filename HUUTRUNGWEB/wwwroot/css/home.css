@@ -1,11 +1,23 @@
 ﻿
 
 /*card - 4 main*/
-/*.card {
+
+
+.card {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    cursor: pointer;
+    cursor: pointer;    
+    }
+.card .impotant{
+    width:35vh;
+}
+.card-body {
+    min-height: 150px;   
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 
 .card-img-top {
@@ -54,13 +66,9 @@
         color: white;
     }
 
-.card-body {
-    min-height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    <!-- Video Details Section -->
-}
+
+
+
 
 
 .textVideo p {
@@ -72,7 +80,7 @@
 .textVideo h2 {
     font-weight: 900;
 }
-*/
+
 
 
 
@@ -106,8 +114,7 @@
        
         user-select: none;
         display: block;
-        background: #fff;
-      
+        background: #fff;      
         text-decoration: none;
        
         transition: 0.2s ease;
@@ -162,7 +169,7 @@
     padding: 0.8rem 0;
     text-align: center;
     text-transform: uppercase;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: black;
     font-weight: 900;
 }

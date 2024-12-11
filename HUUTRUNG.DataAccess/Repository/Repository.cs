@@ -31,20 +31,28 @@ namespace HUUTRUNG.DataAccess.Repository
 		{
 			dbSet.Add(entity);
 		}
-		public T Get(Expression<Func<T, bool>> filter,string? includeProperties = null)
+		public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
 		{
-			IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+            if (tracked){
+                query = dbSet;
+            }
+			else{
+                query = dbSet.AsNoTracking();
+            }
+            query = query.Where(filter);
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach (var includeProp in
-                    includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
             }
-            query = query.Where(filter);
-			return query.FirstOrDefault();
-		}
+            return query.FirstOrDefault();
+        }
+
+
 		public IEnumerable<T> GetAll(string ? includeProperties=null)
 		{
             IQueryable<T> query = dbSet;
@@ -66,7 +74,10 @@ namespace HUUTRUNG.DataAccess.Repository
 		public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, string? includeProperties = null)
 		{
 			IQueryable<T> query = dbSet;
-			if (!string.IsNullOrEmpty(includeProperties))
+			
+                query = query.Where(filter);
+                   
+            if (!string.IsNullOrEmpty(includeProperties))
 			{
 				foreach (var includeProp in
 					includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -79,42 +90,9 @@ namespace HUUTRUNG.DataAccess.Repository
 			{
 				throw new InvalidOperationException("The DbSet is not initialized.");
 			}
-			query = query.Where(filter);
+		
 			return query.ToList();
 		}
-
-
-
-		//public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, string includeProperties = null)
-		//{
-		//	IQueryable<T> query = dbSet;
-
-		//	// Áp dụng điều kiện filter nếu có
-		//	if (filter != null)
-		//	{
-		//		query = query.Where(filter);
-		//	}
-
-		//	// Thêm các thuộc tính để include nếu có
-		//	if (!string.IsNullOrEmpty(includeProperties))
-		//	{
-		//		foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-		//		{
-		//			query = query.Include(includeProp);
-		//		}
-		//	}
-
-		//	// Kiểm tra dbSet có tồn tại không
-		//	if (dbSet == null)
-		//	{
-		//		throw new InvalidOperationException("The DbSet is not initialized.");
-		//	}
-
-		//	return query.ToList();
-		//}
-
-
-
 
 		public void Remove(T entity)
 		{

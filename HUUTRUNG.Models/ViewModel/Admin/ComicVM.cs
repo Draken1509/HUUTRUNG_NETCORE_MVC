@@ -18,13 +18,5 @@ namespace HUUTRUNG.Models.ViewModel.Admin
         [ValidateNever]
         public IEnumerable<SelectListItem> SeriesList { get; set; }
 
-        ////customer
-        //[ValidateNever]
-        //public List<Comic> ComicList { get; set; }
-        //[ValidateNever]
-        //public List<Comic> ComicFreeList { get; set; }
-        //[ValidateNever]
-        //public List<Comic> ComicNewList { get; set; }
-
     }
 }

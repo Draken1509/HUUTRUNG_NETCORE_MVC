@@ -116,47 +116,9 @@
 }
 
 
-.carousel-indicators button {
-    width: max-content !important;
-}
-
-.carousel-indicators {
-    position: unset;
-}
-
-.carousel-caption {
-    padding: 10px;
-    max-width: 500px; /* Giới hạn chiều rộng của phần caption */
-}
-
-.carousel-caption h2 {
-    font-size: 4rem;
-    color: #FFFFFF; /* Màu chữ */
-}
-
-.carousel-caption p {
-    font-size: 1.5rem;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 1000;
-}
-
-.carousel-caption a {
-    font-size: 1.3rem;
-    padding: 10px 0px;
-    font-weight: 300;
-    color: #333; /* Màu chữ của nút */
-    background-color: #FFFFFF; /* Màu nền của nút */
-    text-decoration: none; /* Loại bỏ gạch chân */
-}
-
-.carousel-caption a:hover {
-    color: #FFFFFF; /* Màu chữ khi hover */
-    background-color: #007bff; /* Màu nền khi hover, có thể đổi thành mã màu xanh bạn muốn */
-    transition: background-color 0.3s, color 0.3s;
-}
 
 
-
+/*filter*/
 
 .filter-section {
     border-right: 1px solid #ddd;
@@ -177,7 +139,7 @@
     }
 .custom-label {
     
-    font-size: 1.8rem;
+    font-size: 1.1rem;
     font-weight: normal;
     text-decoration: none !important;
     /*color: #007bff;*/ /* Màu xanh dương */
@@ -185,7 +147,7 @@
     margin-bottom: 0.5rem; /* Khoảng cách bên dưới */
 }
 .toggle-icon {
-    font-size: 1.25em;
+    font-size: 1.1rem;
 }
 
 
