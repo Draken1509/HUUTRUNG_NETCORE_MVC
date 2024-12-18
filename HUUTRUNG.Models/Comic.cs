@@ -67,10 +67,10 @@ namespace HUUTRUNG.Models
         //add foreign key - TypeComic
         [Display(Name = "Type Comic")]      
         public int? TypeComicId { get; set; }
-        [ForeignKey("TypeComicId")]
+        [ForeignKey("ComicCategoryId")]
         [ValidateNever]
         [Display(Name = "Type")]
-        public TypeComic? TypeComic { get; set; }
+        public ComicCategory? ComicCategory { get; set; }
 
 		//add foreign key - Series
 		[Display(Name = "Series")]

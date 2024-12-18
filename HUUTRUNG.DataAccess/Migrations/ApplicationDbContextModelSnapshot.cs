@@ -22,6 +22,30 @@ namespace HUUTRUNG.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HUUTRUNG.Models.Alignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Alignment");
+                });
+
             modelBuilder.Entity("HUUTRUNG.Models.Character", b =>
                 {
                     b.Property<int>("Id")
@@ -33,6 +57,9 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Property<string>("Alias")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("AlignmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BaseOfOperations")
                         .IsRequired()
@@ -74,6 +101,8 @@ namespace HUUTRUNG.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AlignmentId");
+
                     b.ToTable("Characters");
                 });
 
@@ -90,6 +119,9 @@ namespace HUUTRUNG.DataAccess.Migrations
 
                     b.Property<string>("Colorist")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ComicCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Cover")
                         .HasColumnType("nvarchar(max)");
@@ -146,11 +178,36 @@ namespace HUUTRUNG.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ComicCategoryId");
+
                     b.HasIndex("SeriesId");
 
-                    b.HasIndex("TypeComicId");
-
                     b.ToTable("Comics");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.ComicCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ComicCategories");
                 });
 
             modelBuilder.Entity("HUUTRUNG.Models.Company", b =>
@@ -185,6 +242,147 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Companies");
                 });
 
+            modelBuilder.Entity("HUUTRUNG.Models.Gallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Galleries");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Movie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cast")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Director")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscriptionShort")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ExecutiveProducer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MovieCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Producer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Thumbnail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrlVideo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Writer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieCategoryId");
+
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.MovieCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MovieCategories");
+                });
+
             modelBuilder.Entity("HUUTRUNG.Models.News", b =>
                 {
                     b.Property<int>("Id")
@@ -201,6 +399,9 @@ namespace HUUTRUNG.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NewsCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
 
@@ -212,14 +413,32 @@ namespace HUUTRUNG.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TypeNewsId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsCategoryId");
+
+                    b.ToTable("News");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.NewsCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeNewsId");
-
-                    b.ToTable("News");
+                    b.ToTable("NewsCategories");
                 });
 
             modelBuilder.Entity("HUUTRUNG.Models.OrderDetail", b =>
@@ -373,52 +592,6 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.HasIndex("ComicId");
 
                     b.ToTable("ShoppingCarts");
-                });
-
-            modelBuilder.Entity("HUUTRUNG.Models.TypeComic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeComics");
-                });
-
-            modelBuilder.Entity("HUUTRUNG.Models.TypeNews", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeNews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -656,28 +829,62 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("HUUTRUNG.Models.Character", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Alignment", "Alignment")
+                        .WithMany()
+                        .HasForeignKey("AlignmentId");
+
+                    b.Navigation("Alignment");
+                });
+
             modelBuilder.Entity("HUUTRUNG.Models.Comic", b =>
                 {
+                    b.HasOne("HUUTRUNG.Models.ComicCategory", "ComicCategory")
+                        .WithMany()
+                        .HasForeignKey("ComicCategoryId");
+
                     b.HasOne("HUUTRUNG.Models.Series", "Series")
                         .WithMany()
                         .HasForeignKey("SeriesId");
 
-                    b.HasOne("HUUTRUNG.Models.TypeComic", "TypeComic")
-                        .WithMany()
-                        .HasForeignKey("TypeComicId");
+                    b.Navigation("ComicCategory");
 
                     b.Navigation("Series");
+                });
 
-                    b.Navigation("TypeComic");
+            modelBuilder.Entity("HUUTRUNG.Models.Gallery", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Movie", "Movie")
+                        .WithMany("Galleries")
+                        .HasForeignKey("MovieId");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Genre", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Movie", null)
+                        .WithMany("Genres")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Movie", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.MovieCategory", "MovieCategory")
+                        .WithMany()
+                        .HasForeignKey("MovieCategoryId");
+
+                    b.Navigation("MovieCategory");
                 });
 
             modelBuilder.Entity("HUUTRUNG.Models.News", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.TypeNews", "TypeNews")
+                    b.HasOne("HUUTRUNG.Models.NewsCategory", "NewsCategory")
                         .WithMany()
-                        .HasForeignKey("TypeNewsId");
+                        .HasForeignKey("NewsCategoryId");
 
-                    b.Navigation("TypeNews");
+                    b.Navigation("NewsCategory");
                 });
 
             modelBuilder.Entity("HUUTRUNG.Models.OrderDetail", b =>
@@ -787,6 +994,13 @@ namespace HUUTRUNG.DataAccess.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Movie", b =>
+                {
+                    b.Navigation("Galleries");
+
+                    b.Navigation("Genres");
                 });
 #pragma warning restore 612, 618
         }

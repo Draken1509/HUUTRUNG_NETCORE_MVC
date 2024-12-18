@@ -39,7 +39,7 @@ function loadDataTable() {
 
             { data: 'pageCount', width: "5%" },
             { data: 'rated', width: "5%" },
-            { data: 'typeComic.name', width: "15%" },
+            { data: 'comicCategory.name', width: "15%" },
             {
                 data: 'isNew',
                 width: "5%",

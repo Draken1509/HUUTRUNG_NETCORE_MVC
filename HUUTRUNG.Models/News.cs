@@ -29,11 +29,11 @@ namespace HUUTRUNG.Models
         
 		//add foreign key - TypeComic
         [Display(Name = "Type News")]
-        public int? TypeNewsId { get; set; }
-        [ForeignKey("TypeNewsId")]
+        public int? NewsCategoryId { get; set; }
+        [ForeignKey("NewsCategoryId")]
         [ValidateNever]
         [Display(Name = "Type")]
-        public TypeNews? TypeNews { get; set; }
+        public NewsCategory? NewsCategory { get; set; }
 
     }
 }

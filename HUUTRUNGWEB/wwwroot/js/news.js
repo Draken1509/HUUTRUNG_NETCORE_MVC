@@ -31,7 +31,7 @@ function loadDataTable() {
                     return ""; // Xử lý nếu giá trị null
                 }
             },
-            { data: 'typeNews.name', width: "5%" },              
+            { data: 'newsCategory.name', width: "5%" },              
             {
                 data: 'id',
                 render: function (data) {

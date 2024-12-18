@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HUUTRUNG.DataAccess.Repository.IRepository
 {
@@ -15,13 +16,28 @@ namespace HUUTRUNG.DataAccess.Repository.IRepository
 		//T - Caterory
 		IEnumerable<T> GetAll(string? includeProperties = null);
 		IEnumerable<T> GetAll(Expression<Func<T, bool>> filter,string? includeProperties = null);
-		//IEnumerable<List<T>> GetAllAsync(Expression<Func<T, bool>> filter, string? includeProperties = null,
-		//	string ? filterOn = null, string? filterQuery = null,
+
+		//IEnumerable<T> Pagination(Expression<Func<T, bool>> filter, string? includeProperties = null,
+		//	string? filterOn = null, string? filterQuery = null,
 		//	 [FromQuery] string? sortBy = null, [FromQuery] bool? isAscending = null,
-		//	   [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000);    
-        T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked =true);
+		//	   [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000);
+
+		T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true);
 		void Add(T entity);		
 		void Remove(T entity);
 		void RemoveRange(IEnumerable<T> entity);
+
+		public PagedList<T> GetFilteredAndPaged(
+			Expression<Func<T, bool>> filter = null,      
+			Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, 
+			int pageNumber = 1,                              
+			int pageSize = 10,                            
+			string? includeProperties = null                  
+		);
+
+
+
+
+
 	}
 }

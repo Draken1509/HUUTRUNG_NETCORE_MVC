@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HUUTRUNG.Models
 {
@@ -44,19 +46,11 @@ namespace HUUTRUNG.Models
 
 		public DateTime Updated_at { get; set; }
 
-
-
-		//[Display(Name="List Price")]
-		//[Range(1,1000)]
-		//public string Price { get; set; }
-
-		//[Display(Name = "List Price")]
-		//[Range(1, 1000)]
-		//public string Price50 { get; set; }
-
-		//[Display(Name = "List Price")]
-		//[Range(1, 1000)]
-		//public string Price100 { get; set; }
-
+	    //add foreign key - Series
+		[Display(Name = "Alignment")]
+		public int? AlignmentId { get; set; }
+		[ForeignKey("AlignmentId")]
+		[ValidateNever]
+		public Alignment? Alignment { get; set; }
 	}
 }

@@ -34,13 +34,13 @@
                             <span asp-validation-for="News.Thumbnail" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6 ps-5 pe-5 fw-bold">
-                            <label class="mb-1" asp-for="News.TypeNewsId"></label>
-                            <select asp-for="@Model.News.TypeNewsId" asp-items="@Model.TypeNewsList" class="form-select">
+                            <label class="mb-1" asp-for="News.NewsCategoryId"></label>
+                            <select asp-for="@Model.News.NewsCategoryId" asp-items="@Model.TypeNewsList" class="form-select">
                                 <option disabled selected>
                                     --Select Type--
                                 </option>
                             </select>
-                            <span asp-validation-for="@Model.News.TypeNewsId" class="text-danger"></span>
+                            <span asp-validation-for="@Model.News.NewsCategoryId" class="text-danger"></span>
                         </div>
                       
                     </div>

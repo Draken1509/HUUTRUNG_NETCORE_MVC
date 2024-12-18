@@ -6,6 +6,9 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
+
+
 
 namespace HUUTRUNG.Models.ViewModel.Customer
 {
@@ -14,14 +17,18 @@ namespace HUUTRUNG.Models.ViewModel.Customer
         //customer
         [ValidateNever]
         public Comic Comic { get; set; }
-
-        [ValidateNever]
+		public IPagedList<Comic> ComicListPagination { get; set; }
+		[ValidateNever]
         public List<Comic> ComicList { get; set; }
         [ValidateNever]
-        public List<Comic> ComicFreeList { get; set; }
-        [ValidateNever]
-        public List<Comic> ComicNewList { get; set; }
+		public List<ComicCategory> TypeComicList { get; set; }
 		[ValidateNever]
+		public List<String> WriterComicList { get; set; }
+		[ValidateNever]
+		public List<Comic> ComicFreeList { get; set; }
+        [ValidateNever]
+        public List<Comic> ComicNewList { get; set; }     
+        [ValidateNever]
 		public List<Comic> ComicRelatedSeriesList { get; set; }
         [ValidateNever]
         public ShoppingCart ShoppingCart { get; set; }

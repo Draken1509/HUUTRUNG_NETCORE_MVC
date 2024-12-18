@@ -17,25 +17,24 @@ namespace HUUTRUNGWEB.Areas.Customer.Controllers
 			_logger = logger;
 			_unitOfWork = unitOfWork;
 		}
-
 		public IActionResult Index()
 		{
 			List<News> newList = _unitOfWork.News.GetAll().ToList();
 			NewsVM newsVM = new()
 			{
 				OffcialAndLatestNewsList = newList
-				.OrderByDescending(n => n.PublishDate).Take(10).ToList(),
+				.OrderByDescending(n => n.PublishDate).Take(5).ToList(),
 
 				FeaturesNewsList = newList
-				.Where(n => n.TypeNewsId == 1)
+				.Where(n => n.NewsCategoryId == 1)
 				.OrderByDescending(n => n.PublishDate)
-				.Take(10)
+				.Take(5)
 				.ToList(),
 
 				InterviewsNewsList = newList
-				.Where(n => n.TypeNewsId == 2)
+				.Where(n => n.NewsCategoryId == 2)
 				.OrderByDescending(n => n.PublishDate)
-				.Take(10)
+				.Take(5)
 				.ToList()
 			};		
 			return View(newsVM);

@@ -30,7 +30,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Comic> objTypeComicList =
-                _unitOfWork.Comic.GetAll(includeProperties: "TypeComic").ToList();  
+                _unitOfWork.Comic.GetAll(includeProperties: "ComicCategory").ToList();  
             return View(objTypeComicList);
         }
       
@@ -41,7 +41,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 
             ComicVM comicVM = new()
             {
-                TypeComicList = _unitOfWork.TypeComic
+                TypeComicList = _unitOfWork.ComicCategory
                 .GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
@@ -120,7 +120,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 			}
 			else{
 				// Nếu ModelState không hợp lệ, tải lại danh sách các thể loại comic để hiển thị lại form
-				comicVM.TypeComicList = _unitOfWork.TypeComic.GetAll().Select(u => new SelectListItem{
+				comicVM.TypeComicList = _unitOfWork.ComicCategory.GetAll().Select(u => new SelectListItem{
 					Text = u.Name,
 					Value = u.Id.ToString()
 				}); // Trả về lại view với model comicVM chứa danh sách các thể loại
@@ -195,7 +195,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
 			List<Comic> objTypeComicList =
-			   _unitOfWork.Comic.GetAll(includeProperties: "TypeComic").ToList();
+			   _unitOfWork.Comic.GetAll(includeProperties: "ComicCategory").ToList();
 			return Json(new {data = objTypeComicList });
 		}
 

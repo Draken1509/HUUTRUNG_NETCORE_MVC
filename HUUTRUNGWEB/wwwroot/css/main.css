@@ -14,34 +14,12 @@ ul li {
     list-style: none;
 }
 
-/*css news*/
 
-/*
-
-font-family: 'Montserrat', sans-serif;
-font-family: 'Raleway', sans-serif;
-
-*/
-
-/* *{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-} */
-
-/* :root{
-    --heading: 'Montserrat', sans-serif;
-} */
-
-body {
-/*    font-family: 'Raleway', sans-serif;*/
-    background: #fff;
-}
 
 /* global styling */
 
 img {
-    width: auto;
+   
     display:block;
     margin:auto;
 }
@@ -170,22 +148,24 @@ hr {
 
 
 .current-news-head {
+    poin
     background: #fff;
     padding: 20px;
     font-size: 12px;
     margin: 20px 0;
 }
 
-    .current-news-head h3 {
+    .current-news-head h5,h4,h3{
         padding: 6px;
         cursor: pointer;
         position: relative;
     }
 
-        .current-news-head h3:hover::before {
+        .current-news-head  h3,h5 :hover::before {
             content: ">> ";
             position: absolute;
             left: -12px;
+          
         }
 
     .current-news-head span {

@@ -18,7 +18,7 @@ namespace HUUTRUNG.DataAccess.Data
         }
     
 		public DbSet<Character> Characters { get; set; }
-		public DbSet<TypeComic> TypeComics { get; set; }
+		public DbSet<ComicCategory> ComicCategories { get; set; }
         public DbSet<Series> Series { get; set; }		
 		public DbSet<Comic> Comics { get; set; }      
         public DbSet<Company> Companies { get; set; }
@@ -27,15 +27,21 @@ namespace HUUTRUNG.DataAccess.Data
 		public DbSet<OrderHeader> OrderHeaders { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 		public DbSet<News> News { get; set; }
-        public DbSet<TypeNews> TypeNews { get; set; }
-        #region du lieu du thua
-        //public DbSet<Category>  Categories { get; set; }
-        //public DbSet<Alignment> Alignment { get; set; }
-        // public DbSet<District> Districts { get; set; }
-        // public DbSet<Province> Provinces { get; set; }
-        // public DbSet<Region> Regions { get; set; }
-        #endregion
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<NewsCategory> NewsCategories{ get; set; }
+		public DbSet<Genre> Genres { get; set; }
+		public DbSet<MovieCategory> MovieCategories { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+		public DbSet<Gallery> Galleries { get; set; }
+
+
+		#region du lieu du thua
+		//public DbSet<Category>  Categories { get; set; }
+		//public DbSet<Alignment> Alignment { get; set; }
+		// public DbSet<District> Districts { get; set; }
+		// public DbSet<Province> Provinces { get; set; }
+		// public DbSet<Region> Regions { get; set; }
+		#endregion
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
             #region hehe

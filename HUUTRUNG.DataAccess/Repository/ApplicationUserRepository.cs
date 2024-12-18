@@ -20,7 +20,7 @@ namespace HUUTRUNG.DataAccess.Repository
 		}
 		public void Update(ApplicationUser obj)
 		{           
-             _db.SaveChanges();
+             _db.ApplicationUsers.Update(obj);
         }
 	}
 }

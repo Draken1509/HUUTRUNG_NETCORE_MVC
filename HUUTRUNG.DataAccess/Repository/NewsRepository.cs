@@ -33,7 +33,7 @@ namespace HUUTRUNG.DataAccess.Repository
                     objFromDb.PublishDate = obj.PublishDate;
                 }            
              
-                    objFromDb.TypeNewsId = obj.TypeNewsId;
+                    objFromDb.NewsCategoryId = obj.NewsCategoryId;
                                     
                 if (obj.Thumbnail != null){
                     objFromDb.Thumbnail = obj.Thumbnail;

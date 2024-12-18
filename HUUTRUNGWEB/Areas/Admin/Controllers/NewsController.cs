@@ -31,7 +31,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<News> objTypeNewsList =
-                _unitOfWork.News.GetAll(includeProperties: "TypeNews").ToList(); 
+                _unitOfWork.News.GetAll(includeProperties: "NewsCategory").ToList(); 
             return View(objTypeNewsList);
         }
       
@@ -39,7 +39,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         {
             NewsVMA newsVM = new()
             {
-                TypeNewsList = _unitOfWork.TypeNews
+                TypeNewsList = _unitOfWork.NewsCategory
                .GetAll().Select(u => new SelectListItem
                {
                    Text = u.Name,
@@ -107,7 +107,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
 				return RedirectToAction("Index");
 			}
 			else{
-                newsVM.TypeNewsList= _unitOfWork.TypeNews.GetAll().Select(u => new SelectListItem
+                newsVM.TypeNewsList= _unitOfWork.NewsCategory.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
@@ -123,7 +123,7 @@ namespace HUUTRUNGWEB.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
 			List<News> objTypeNewsList =
-			   _unitOfWork.News.GetAll(includeProperties: "TypeNews").ToList();
+			   _unitOfWork.News.GetAll(includeProperties: "NewsCategory").ToList();
 			return Json(new {data = objTypeNewsList });
 		}
 

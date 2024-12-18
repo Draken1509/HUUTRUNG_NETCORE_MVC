@@ -11,7 +11,7 @@ namespace HUUTRUNG.DataAccess.Repository.IRepository
 		ICategoryRepository Category{ get; }
         ICharacterRepository Character { get; }
 		IComicRepository Comic { get; }
-        ITypeComicRepository TypeComic { get; }
+        IComicCaterogyRepository ComicCategory { get; }
         ISeriesRepository Series { get; }
         ICompanyRepository Company { get; }
         IShoppingCartRepository ShoppingCart { get; }
@@ -19,8 +19,12 @@ namespace HUUTRUNG.DataAccess.Repository.IRepository
 		IOrderDetailRepository OrderDetail { get; }
 		IOrderHeaderRepository OrderHeader { get; }
 		INewsRepository News { get; }
-        ITypeNewsRepository TypeNews { get; }
-        void Save();
+        INewsCategoryRepository NewsCategory{ get; }
+
+		IMovieRepository Movie { get; }
+		IMovieCategoryRepository MovieCategory { get; }
+		IGenreRepository Genre { get; }
+		void Save();
 
 	}
 }

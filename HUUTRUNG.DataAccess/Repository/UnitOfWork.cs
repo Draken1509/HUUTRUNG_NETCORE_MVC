@@ -18,7 +18,7 @@ namespace HUUTRUNG.DataAccess.Repository
 		public ICategoryRepository Category{ get; private set; }
         public ICharacterRepository Character{ get; private set; }
         public IComicRepository Comic { get; private set; }
-        public ITypeComicRepository TypeComic { get; private set; }
+        public IComicCaterogyRepository ComicCategory { get; private set; }
         public ISeriesRepository Series { get; private set; }
         public ICompanyRepository Company { get; private set; }
         public IShoppingCartRepository ShoppingCart { get; private set; }
@@ -26,16 +26,19 @@ namespace HUUTRUNG.DataAccess.Repository
 		public IOrderDetailRepository OrderDetail { get; private set; }
 		public IOrderHeaderRepository OrderHeader { get; private set; }
 		public INewsRepository News { get; private set; }
-        public ITypeNewsRepository TypeNews { get; private set; }
+        public INewsCategoryRepository NewsCategory { get; private set; }
+		public IMovieRepository Movie { get; private set; }
+		public IMovieCategoryRepository MovieCategory { get; private set; }
+		public IGenreRepository Genre { get; private set; }
 
 
-        public UnitOfWork (ApplicationDbContext db)
+		public UnitOfWork (ApplicationDbContext db)
 		{
 			_db = db;
 			Category = new CategoryRepository(_db);  
 			Character =new CharacterRepository(_db);
             Comic= new ComicRepository(_db);
-            TypeComic = new TypeComicRepository(_db);
+			ComicCategory = new ComicCategoryRepository(_db);
             Series = new SeriesRepository(_db);
 			Company = new CompanyRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
@@ -43,8 +46,11 @@ namespace HUUTRUNG.DataAccess.Repository
 			OrderDetail = new OrderDetailRepository(_db);
 			OrderHeader = new OrderHeaderRepository(_db);
 			News = new NewsRepository(_db);
-            TypeNews = new TypeNewsRepository(_db);
-        }
+			NewsCategory = new NewsCategoryRepository(_db);
+			Movie = new MovieRepository(_db);
+			MovieCategory = new MovieCategoryRepository(_db);
+			Genre = new GenreRepository(_db);
+		}
 		
 		public void Save()
 		{

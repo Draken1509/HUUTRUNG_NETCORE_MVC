@@ -1,19 +1,25 @@
 ﻿@model NewsVM
+<style> 
+    img{
+        width:100% ;
+        height: 100%;
+    }
+    a{
+       background:none;
+    }
+</style>
 <section class="banner">
     <div class="banner-main-content">
-        <h4>GET THE WORLD'S LATEST TECH NEWS</h4>
-        <h4>World's Leading Tech News Portal</h4>
-
-        <button>
-            <a href="#">Know More</a>
-        </button>
+        <h5 style="text-transform:uppercase">This is the latest news page of DC-COMIC</h5>
         <div class="current-news-head">
             @foreach (var item in Model.OffcialAndLatestNewsList)
             {
-                <h4>
-                    @item.Tittle
-                    <span>by @item.Author</span>
-                </h4>
+                <h5>
+                    <a asp-action="Details" asp-route-newsId="@item.Id">
+                        @item.Tittle
+                        <span>by @item.Author</span>
+                    </a>                                      
+                </h5>
             }
         </div>
     </div>
@@ -24,16 +30,15 @@
         {
             <div class="hot-topic">
                 <img src="~/@item.Thumbnail" alt="@item.Tittle" />
-                <div class="hot-topic-content">
-                    <h4>@item.Tittle</h4>
-                    <p>@Html.Raw(item.Content.Length > 100 ? item.Content.Substring(0, 300) + "..." : item.Content)</p>
+                <div class="hot-topic-content">                 
+                    <p style="text-decoration:none">@Html.Raw(item.Content.Length > 100 ? item.Content.Substring(0, 300) + "..." : item.Content)</p>
+                    <h5>@item.Tittle</h5>
                     <a asp-action="Details" asp-route-newsId="@item.Id">Read More</a>
                 </div>
             </div>
         }
     </div>
 </section>
-
 <hr>
 
 <main>
@@ -46,11 +51,11 @@
             {
                 var topArticle = Model.FeaturesNewsList.First();
                 <article>
-                    <img src="~/@topArticle.Thumbnail" alt="@topArticle.Tittle">
+                    <img width="auto !important" src="~/@topArticle.Thumbnail" alt="@topArticle.Tittle">
                     <div>
                         <h4>@topArticle.Tittle</h4>
                         <p>@Html.Raw(topArticle.Content.Length > 100 ? topArticle.Content.Substring(0, 300) + "..." : topArticle.Content)</p>
-                        <a href="#">Read More <span>>></span></a>
+                        <a asp-action="Details" asp-route-newsId="@topArticle.Id">Read More</a>
                     </div>
                 </article>
             }
@@ -60,11 +65,11 @@
             @foreach (var article in Model.FeaturesNewsList.Skip(1))
             {
                 <article>
-                    <img src="~/@article.Thumbnail" alt="@article.Tittle">
+                    <img src="~/@article.Thumbnail" alt="@article.Tittle" style="height: 100px !important;">
                     <div>
                         <h4>@article.Tittle</h4>
                         <p>@Html.Raw(article.Content.Length > 100 ? article.Content.Substring(0, 300) + "..." : article.Content)</p>
-                        <a href="#">Read More <span>>></span></a>
+                        <a asp-action="Details" asp-route-newsId="@article.Id">Read More</a>
                     </div>
                 </article>
             }
@@ -80,7 +85,7 @@
                 <div>
                     <h4>@item.Tittle</h4>
                     <p>@Html.Raw(item.Content.Length > 100 ? item.Content.Substring(0, 300) + "..." : item.Content)</p>
-                    <a href="#">Read More <span>>></span></a>
+                    <a asp-action="Details" asp-route-newsId="@item.Id">Read More</a>
                 </div>
                 <img src="~/@item.Thumbnail" alt="@item.Tittle">
             </article>
