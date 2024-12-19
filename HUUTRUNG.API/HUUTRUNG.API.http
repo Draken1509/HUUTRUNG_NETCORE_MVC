@@ -1,0 +1,6 @@
+@HUUTRUNG.API_HostAddress = http://localhost:5018
+
+GET {{HUUTRUNG.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
