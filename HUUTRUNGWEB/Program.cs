@@ -1,4 +1,4 @@
-using HUUTRUNG.DataAccess.Repository;
+﻿using HUUTRUNG.DataAccess.Repository;
 using HUUTRUNG.DataAccess.Repository.IRepository;
 using HUUTRUNG.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +19,10 @@ builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Str
 
 //builder.Services.AddIdentity<IdentityUser,IdentityRole>  
 //    (options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders(); //Th�m IdentityRole
+//    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders(); //Thêm IdentityRole
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-	.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders(); //Th�m IdentityRole
+	.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders(); //Thêm IdentityRole
 
 
 
@@ -68,7 +68,7 @@ StripeConfiguration.ApiKey=builder.Configuration.GetSection("Stripe:SecretKey").
 app.UseRouting();
 app.UseSession();
 SeedDatabase();
-app.UseAuthentication(); // x�c th?c tr??c ?y quy?n 
+app.UseAuthentication(); // xác thực ủy quyen
 app.UseAuthorization(); 
 app.MapRazorPages();
 
