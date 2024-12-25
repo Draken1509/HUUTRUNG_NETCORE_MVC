@@ -1,5 +1,5 @@
 ﻿using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Models.ViewModel.Admin;
 using HUUTRUNG.Utility;
 using Microsoft.AspNetCore.Authorization;

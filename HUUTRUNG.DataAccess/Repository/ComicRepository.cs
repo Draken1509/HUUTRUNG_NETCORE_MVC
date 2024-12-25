@@ -1,6 +1,6 @@
 ﻿using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 using X.PagedList;
 
 namespace HUUTRUNG.DataAccess.Repository
-{ 
-	public class ComicRepository : Repository<Comic>, IComicRepository
+{
+    public class ComicRepository : Repository<Comic>, IComicRepository
 	{
 		private readonly ApplicationDbContext _db;	
 		public ComicRepository(ApplicationDbContext db):base(db) {
@@ -41,7 +41,7 @@ namespace HUUTRUNG.DataAccess.Repository
                 objFromDb.OnSaleDate = obj.OnSaleDate;
                 objFromDb.PageCount = obj.PageCount;
                 objFromDb.Rated = obj.Rated;              
-                objFromDb.TypeComicId = obj.TypeComicId;
+                objFromDb.ComicCategoryId = obj.ComicCategoryId;
                 objFromDb.SeriesId = obj.SeriesId;
                 objFromDb.Description = obj.Description;
                 objFromDb.IsFree = obj.IsFree;

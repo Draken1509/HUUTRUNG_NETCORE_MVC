@@ -1,11 +1,11 @@
 ﻿
 using HUUTRUNG.DataAccess.Repository.IRepository;
 using HUUTRUNG.DataAccess.Data;
-using HUUTRUNG.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using HUUTRUNG.Utility;
 using Microsoft.AspNetCore.Authorization;
+using HUUTRUNG.Models.Domain;
 
 namespace HUUTRUNGWEB.Areas.Admin.Controllers
 {

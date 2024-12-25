@@ -12,7 +12,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

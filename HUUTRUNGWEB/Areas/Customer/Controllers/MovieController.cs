@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Security.Claims;
 using X.PagedList.Extensions;
 using System;
+using HUUTRUNG.Models.Domain;
 
 
 namespace HUUTRUNGWEB.Areas.Customer.Controllers

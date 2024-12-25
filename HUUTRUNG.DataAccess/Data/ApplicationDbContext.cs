@@ -1,11 +1,11 @@
-﻿using HUUTRUNG.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using HUUTRUNG.Models.Domain;
 
 namespace HUUTRUNG.DataAccess.Data
 {
@@ -33,15 +33,22 @@ namespace HUUTRUNG.DataAccess.Data
         public DbSet<Movie> Movies { get; set; }
 		public DbSet<Gallery> Galleries { get; set; }
 
+		public DbSet<Page> Pages { get; set; }
+		public DbSet<Rating> Ratings { get; set; }
+		public DbSet<Comment> Comments { get; set; }
 
-		#region du lieu du thua
-		//public DbSet<Category>  Categories { get; set; }
-		//public DbSet<Alignment> Alignment { get; set; }
-		// public DbSet<District> Districts { get; set; }
-		// public DbSet<Province> Provinces { get; set; }
-		// public DbSet<Region> Regions { get; set; }
-		#endregion
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<Bookmark> Bookmarks { get; set; }
+
+
+
+        #region du lieu du thua
+        //public DbSet<Category>  Categories { get; set; }
+        //public DbSet<Alignment> Alignment { get; set; }
+        // public DbSet<District> Districts { get; set; }
+        // public DbSet<Province> Provinces { get; set; }
+        // public DbSet<Region> Regions { get; set; }
+        #endregion
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
             #region hehe

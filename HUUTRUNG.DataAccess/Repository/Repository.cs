@@ -25,7 +25,7 @@ namespace HUUTRUNG.DataAccess.Repository
         {
 			_db = db;
 			this.dbSet= _db.Set<T>();
-			_db.Comics.Include(u => u.ComicCategory).Include(u=>u.TypeComicId);  // lấy thêm dữ liệu từ bảng TypeComic, nếu muốn lấy thêm bảng thì cứ Include
+			_db.Comics.Include(u => u.ComicCategory).Include(u=>u.ComicCategoryId);  // lấy thêm dữ liệu từ bảng TypeComic, nếu muốn lấy thêm bảng thì cứ Include
         }
         public void Add(T entity)
 		{

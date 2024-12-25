@@ -1,5 +1,5 @@
 ﻿using HUUTRUNG.DataAccess.Data;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

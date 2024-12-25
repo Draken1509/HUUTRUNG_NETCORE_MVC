@@ -94,13 +94,13 @@
                    
                     <div class="row">
                         <div class="col-12 col-md-6 ps-5 pe-5 fw-bold">
-                            <label class="mb-1" asp-for="Comic.TypeComicId"></label>
-                            <select asp-for="@Model.Comic.TypeComicId" asp-items="@Model.TypeComicList" class="form-select">
+                            <label class="mb-1" asp-for="Comic.ComicCategoryId"></label>
+                            <select asp-for="@Model.Comic.ComicCategoryId" asp-items="@Model.TypeComicList" class="form-select">
                                 <option disabled selected>
                                     --Select Type--
                                 </option>
                             </select>
-                            <span asp-validation-for="Comic.TypeComicId" class="text-danger"></span>
+                            <span asp-validation-for="Comic.ComicCategoryId" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6 ps-5 pe-5 fw-bold">
                             <label class="mb-1" asp-for="Comic.SeriesId"></label>
@@ -109,7 +109,7 @@
                                     --Select Series--
                                 </option>
                             </select>
-                            <span asp-validation-for="Comic.TypeComicId" class="text-danger"></span>
+                            <span asp-validation-for="Comic.ComicCategoryId" class="text-danger"></span>
                         </div>
 
                     </div>

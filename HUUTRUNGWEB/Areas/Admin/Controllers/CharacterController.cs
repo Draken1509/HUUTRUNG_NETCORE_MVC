@@ -1,12 +1,12 @@
 ﻿using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HUUTRUNGWEB.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
     public class CharacterController : Controller
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using HUUTRUNG.Models.Domain;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using X.PagedList;
 
 namespace HUUTRUNG.Models.ViewModel.Customer
 {
-	public class MovieVM
+    public class MovieVM
 	{
 		public List<Movie> MovieList {  get; set; }	
 		public PagedList<Movie> MovieListPagination { get; set; }

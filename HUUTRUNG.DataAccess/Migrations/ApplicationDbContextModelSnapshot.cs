@@ -22,7 +22,7 @@ namespace HUUTRUNG.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HUUTRUNG.Models.Alignment", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Alignment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,42 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Alignment");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Character", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Bookmark", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ComicId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCurrentlyReading")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSave")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("SavedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ComicId");
+
+                    b.ToTable("Bookmarks");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Character", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +141,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Comic", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Comic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,9 +202,6 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Property<string>("Thumbnail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TypeComicId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("Updated_at")
                         .HasColumnType("datetime2");
 
@@ -185,7 +217,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Comics");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.ComicCategory", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.ComicCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,7 +242,44 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("ComicCategories");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Company", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ComicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentCommentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ComicId");
+
+                    b.HasIndex("ParentCommentId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,7 +311,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Gallery", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Gallery", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +338,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Galleries");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Genre", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -298,7 +367,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Movie", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -358,7 +427,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.MovieCategory", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.MovieCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -383,7 +452,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("MovieCategories");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.News", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.News", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -420,7 +489,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("News");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.NewsCategory", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.NewsCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -441,7 +510,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("NewsCategories");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.OrderDetail", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -470,7 +539,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.OrderHeader", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.OrderHeader", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -546,7 +615,57 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("OrderHeaders");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Series", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Page", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ComicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PageNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComicId");
+
+                    b.ToTable("Pages");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ComicId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ComicId");
+
+                    b.ToTable("Ratings");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Series", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -555,7 +674,6 @@ namespace HUUTRUNG.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -567,7 +685,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("Series");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.ShoppingCart", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -801,7 +919,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.ApplicationUser", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -829,22 +947,37 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Character", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Bookmark", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.Alignment", "Alignment")
+                    b.HasOne("HUUTRUNG.Models.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
+                        .WithMany()
+                        .HasForeignKey("ComicId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Comic");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Character", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Domain.Alignment", "Alignment")
                         .WithMany()
                         .HasForeignKey("AlignmentId");
 
                     b.Navigation("Alignment");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Comic", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Comic", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.ComicCategory", "ComicCategory")
+                    b.HasOne("HUUTRUNG.Models.Domain.ComicCategory", "ComicCategory")
                         .WithMany()
                         .HasForeignKey("ComicCategoryId");
 
-                    b.HasOne("HUUTRUNG.Models.Series", "Series")
+                    b.HasOne("HUUTRUNG.Models.Domain.Series", "Series")
                         .WithMany()
                         .HasForeignKey("SeriesId");
 
@@ -853,49 +986,70 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Navigation("Series");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Gallery", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Comment", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.Movie", "Movie")
+                    b.HasOne("HUUTRUNG.Models.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
+                        .WithMany("Comments")
+                        .HasForeignKey("ComicId");
+
+                    b.HasOne("HUUTRUNG.Models.Domain.Comment", "ParentComment")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentCommentId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Comic");
+
+                    b.Navigation("ParentComment");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Gallery", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Domain.Movie", "Movie")
                         .WithMany("Galleries")
                         .HasForeignKey("MovieId");
 
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Genre", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Genre", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.Movie", null)
+                    b.HasOne("HUUTRUNG.Models.Domain.Movie", null)
                         .WithMany("Genres")
                         .HasForeignKey("MovieId");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Movie", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Movie", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.MovieCategory", "MovieCategory")
+                    b.HasOne("HUUTRUNG.Models.Domain.MovieCategory", "MovieCategory")
                         .WithMany()
                         .HasForeignKey("MovieCategoryId");
 
                     b.Navigation("MovieCategory");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.News", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.News", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.NewsCategory", "NewsCategory")
+                    b.HasOne("HUUTRUNG.Models.Domain.NewsCategory", "NewsCategory")
                         .WithMany()
                         .HasForeignKey("NewsCategoryId");
 
                     b.Navigation("NewsCategory");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.OrderDetail", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.OrderDetail", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.Comic", "Comic")
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
                         .WithMany()
                         .HasForeignKey("ComicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HUUTRUNG.Models.OrderHeader", "OrderHeader")
+                    b.HasOne("HUUTRUNG.Models.Domain.OrderHeader", "OrderHeader")
                         .WithMany()
                         .HasForeignKey("OrderHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -906,9 +1060,9 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Navigation("OrderHeader");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.OrderHeader", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.OrderHeader", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("HUUTRUNG.Models.Domain.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -917,15 +1071,39 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.ShoppingCart", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Page", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
+                        .WithMany("Pages")
+                        .HasForeignKey("ComicId");
+
+                    b.Navigation("Comic");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Rating", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
+                        .WithMany("Ratings")
+                        .HasForeignKey("ComicId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Comic");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.ShoppingCart", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Domain.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HUUTRUNG.Models.Comic", "Comic")
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
                         .WithMany()
                         .HasForeignKey("ComicId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -987,16 +1165,30 @@ namespace HUUTRUNG.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.ApplicationUser", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.ApplicationUser", b =>
                 {
-                    b.HasOne("HUUTRUNG.Models.Company", "Company")
+                    b.HasOne("HUUTRUNG.Models.Domain.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("HUUTRUNG.Models.Movie", b =>
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Comic", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Pages");
+
+                    b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Comment", b =>
+                {
+                    b.Navigation("Replies");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Movie", b =>
                 {
                     b.Navigation("Galleries");
 

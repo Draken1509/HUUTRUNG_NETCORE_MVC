@@ -1,6 +1,6 @@
 ﻿using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 using X.PagedList;
 
 namespace HUUTRUNG.DataAccess.Repository
-{ 
-	public class MovieRepository : Repository<Movie>, IMovieRepository
+{
+    public class MovieRepository : Repository<Movie>, IMovieRepository
 	{
 		private readonly ApplicationDbContext _db;	
 		public MovieRepository(ApplicationDbContext db):base(db) {

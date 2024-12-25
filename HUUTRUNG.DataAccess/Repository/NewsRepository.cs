@@ -1,6 +1,6 @@
 ﻿using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,8 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HUUTRUNG.DataAccess.Repository
-{ 
-	public class NewsRepository : Repository<News>, INewsRepository
+{
+    public class NewsRepository : Repository<News>, INewsRepository
 	{
 		private readonly ApplicationDbContext _db;	
 		public NewsRepository(ApplicationDbContext db):base(db) {

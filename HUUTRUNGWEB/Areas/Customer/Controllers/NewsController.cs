@@ -1,5 +1,5 @@
 ﻿using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
+using HUUTRUNG.Models.Domain;
 using HUUTRUNG.Models.ViewModel.Customer;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace HUUTRUNGWEB.Areas.Customer.Controllers
 {
-	[Area("Customer")]
+    [Area("Customer")]
 	public class NewsController : Controller
 	{
 		private readonly ILogger<NewsController> _logger;

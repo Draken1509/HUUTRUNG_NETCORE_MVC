@@ -1,7 +1,6 @@
 ﻿
 using HUUTRUNG.DataAccess.Repository.IRepository;
 using HUUTRUNG.DataAccess.Data;
-using HUUTRUNG.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
@@ -13,6 +12,7 @@ using HUUTRUNG.Models.ViewModel.Admin;
 using Microsoft.AspNetCore.Authorization;
 using HUUTRUNG.Utility;
 using HUUTRUNG.Models.ViewModel.Admin;
+using HUUTRUNG.Models.Domain;
 
 namespace HUUTRUNGWEB.Areas.Admin.Controllers
 {

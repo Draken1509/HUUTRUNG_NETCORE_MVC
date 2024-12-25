@@ -1,6 +1,5 @@
 ﻿using HUUTRUNG.DataAccess.Repository;
 using HUUTRUNG.DataAccess.Repository.IRepository;
-using HUUTRUNG.Models;
 using HUUTRUNG.Models.ViewModel.Admin;
 using HUUTRUNG.Models.ViewModel.Customer;
 using HUUTRUNG.Utility;
@@ -15,6 +14,7 @@ using System.Security.Claims;
 using X.PagedList.Extensions;
 using System;
 using System.Linq.Expressions;
+using HUUTRUNG.Models.Domain;
 
 
 namespace HUUTRUNGWEB.Areas.Customer.Controllers
