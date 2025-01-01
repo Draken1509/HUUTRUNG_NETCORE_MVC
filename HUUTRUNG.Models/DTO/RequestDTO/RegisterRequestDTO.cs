@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HUUTRUNG_WEBAPI.Model.DTO
+namespace HUUTRUNG.Models.DTO.RequestDTO
 {
     public class RegisterRequestDTO
     {

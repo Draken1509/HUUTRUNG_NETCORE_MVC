@@ -18,19 +18,19 @@ namespace HUUTRUNG.Models.ViewModel.Customer
         //customer
         [ValidateNever]
         public Comic Comic { get; set; }
-		public IPagedList<Comic> ComicListPagination { get; set; }
-		[ValidateNever]
+        public IPagedList<Comic> ComicListPagination { get; set; }
+        [ValidateNever]
         public List<Comic> ComicList { get; set; }
         [ValidateNever]
-		public List<ComicCategory> TypeComicList { get; set; }
-		[ValidateNever]
-		public List<String> WriterComicList { get; set; }
-		[ValidateNever]
-		public List<Comic> ComicFreeList { get; set; }
+        public List<ComicCategory> TypeComicList { get; set; }
         [ValidateNever]
-        public List<Comic> ComicNewList { get; set; }     
+        public List<String> WriterComicList { get; set; }
         [ValidateNever]
-		public List<Comic> ComicRelatedSeriesList { get; set; }
+        public List<Comic> ComicFreeList { get; set; }
+        [ValidateNever]
+        public List<Comic> ComicNewList { get; set; }
+        [ValidateNever]
+        public List<Comic> ComicRelatedSeriesList { get; set; }
         [ValidateNever]
         public ShoppingCart ShoppingCart { get; set; }
 
@@ -38,6 +38,7 @@ namespace HUUTRUNG.Models.ViewModel.Customer
 
         public OrderHeader OrderHeader { get; set; }
 
+        public Movie MovieMain {get;set;}
 
 
 

@@ -34,6 +34,7 @@
 	</div>
 </div>
 @* main video*@
+
 <div class="container-fuild " style=" background-color: rgba(0, 116, 232, 1);">
 	<div class="container p-3">
 		<div class="row align-items-center" style="color:white">
@@ -42,7 +43,8 @@
 			{
 				<div class="col-md-7">
 					<div class="ratio ratio-16x9">
-						<iframe src="@("https://www.youtube.com/embed/" + Model.MovieMain.UrlVideo)" title="Creature Commandos Trailer" allowfullscreen></iframe>
+						<iframe src="@("https://www.youtube.com/embed/" +
+Model.MovieMain.UrlVideo)" title="Creature Commandos Trailer" allowfullscreen></iframe>
 					</div>
 				</div>
 
@@ -62,6 +64,9 @@
 	</div>
 
 </div>
+
+
+
 
 @* TRAILERS, CLIPS AND MORE*@
 <div class="container my-5">
@@ -203,7 +208,7 @@
 
 
 
-		<!-- Character Cards Section -->
+		<!-- Movie Cards Section -->
 		<div class="col-md-8 col-lg-9 p-4">
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h2 class="heading"> BROWSE CHARACTERS</h2>
@@ -212,19 +217,23 @@
 
 				@foreach (var obj in Model.MovieListPagination)
 				{
-					<div class="col-6 col-md-4 col-lg-3 mb-3">
+					<div class="col-6 col-md-4 col-lg-3 mb-1">
 						<div class="">
 							<img src="~/@obj.Thumbnail" class="card-img-top rounded" alt="@obj.Name">
 							<div class="card-body">
 								<div  style="min-height:none">										
-									<p class=" fw-bold text-center">@obj.Name</p>
+									<p class="fw-bold text-center">
+										@(obj.Name.Length > 34 ? obj.Name.Substring(0, 34) + "..." : obj.Name)
+									</p>
+
 								</div>
 								
-							@* 	<div class="btn-container">
-									<a asp-action="Details" asp-route-movieId="@obj.Id" class="btn btn-primary bg-gradient border-0 w-100">
-										Details
-									</a>
-								</div> *@
+							  	<div class="btn-container">
+							  		<a asp-action="Details" asp-route-movieId="@obj.Id" class="btn btn-primary bg-gradient border-0 w-100">
+							  			Details
+							  		</a>
+							  	</div> 
+
 							</div>
 						</div>
 					</div>

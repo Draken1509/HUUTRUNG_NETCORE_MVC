@@ -1,4 +1,4 @@
-﻿namespace HUUTRUNG_WEBAPI.Repositories
+﻿namespace HUUTRUNG.Models.DTO.ResponseDTO
 {
     public class RatingDTO
     {

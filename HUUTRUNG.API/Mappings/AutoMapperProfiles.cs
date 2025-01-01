@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HUUTRUNG.Models.Domain;
-using HUUTRUNG_WEBAPI.Model.Domain;
-using HUUTRUNG_WEBAPI.Model.DTO;
+using HUUTRUNG.Models.DTO.RequestDTO;
+using HUUTRUNG.Models.DTO.ResponseDTO;
 
 namespace HUUTRUNG_WEBAPI.Mappings
 {
@@ -16,8 +16,16 @@ namespace HUUTRUNG_WEBAPI.Mappings
             CreateMap<Comic, ComicDTO>().ReverseMap();
             CreateMap<AddComicRequestDTO,Comic >().ReverseMap();
             CreateMap<Comic, UpdateComicRequestDTO>().ReverseMap();
+            CreateMap<Bookmark, BookmarkRequestDTO>().ReverseMap();
+            //CreateMap<Comment, CommentRequestDTO>().ReverseMap();
+            //CreateMap<Comment, CommentResponseDTO>().ReverseMap();
+            CreateMap<Rating, RatingRequestDTO>().ReverseMap();
 
-        }
+			CreateMap<Comment, CommentResponseDTO>()
+		   .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.ApplicationUser.Email)) // Lấy Email từ ApplicationUser
+		   .ReverseMap();
+
+		}
     }
 }
        //.ForMember(dest => dest.Pages, opt => opt.MapFrom(src => src.Pages))

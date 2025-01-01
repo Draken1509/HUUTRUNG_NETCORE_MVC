@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HUUTRUNG.Models.Domain
 {
-    public   class Bookmark
+    public class Bookmark
     {
         [Key]
         public int Id { get; set; }

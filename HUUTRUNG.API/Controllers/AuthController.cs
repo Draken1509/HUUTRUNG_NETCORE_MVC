@@ -1,4 +1,6 @@
-﻿using HUUTRUNG_WEBAPI.Model.DTO;
+﻿using HUUTRUNG.Models.Domain;
+using HUUTRUNG.Models.DTO.RequestDTO;
+using HUUTRUNG.Models.DTO.ResponseDTO;
 using HUUTRUNG_WEBAPI.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +14,6 @@ namespace HUUTRUNG_WEBAPI.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly ITokenRepository tokenRepository;
-
         public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
@@ -49,14 +50,12 @@ namespace HUUTRUNG_WEBAPI.Controllers
   //          return BadRequest("Something went wrong");
   //      }
 		#endregion
-
-
 		// POST: /api/Auth/Login
 		[HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
-            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+            var user = await userManager.FindByEmailAsync(loginRequestDto.Email);
 
             if (user != null)
             {
@@ -75,9 +74,13 @@ namespace HUUTRUNG_WEBAPI.Controllers
 
                         var response = new LoginResponseDTO
                         {
-                            JwtToken = jwtToken
-                        };
 
+                            Email = loginRequestDto.Email,
+                            Roles = roles.ToList(),
+                            Token = "TOKEN",
+                            JwtToken = jwtToken,
+                            ApplicationUserId = user.Id
+                        };
                         return Ok(response);
                     }
                 }

@@ -118,65 +118,11 @@ namespace HUUTRUNGWEB.Areas.Customer.Controllers
 			return View();
 		}
 
-		//public IActionResult Details(int ? MovieId) {
-		//          Movie Movie = _unitOfWork.Movie.Get(u => u.Id == MovieId, includeProperties: "TypeMovie");        
-		//          ShoppingCartVM shoppingCartVM = new()
-		//          {
-		//              MovieRelatedSeriesList = _unitOfWork.Movie.GetAll(c => c.SeriesId == Movie.SeriesId)               
-		//              .Select(c => new Movie
-		//              {
-		//                  Id = c.Id,
-		//                  Price = c.Price,
-		//                  Thumbnail = c.Thumbnail,
-		//                  Name = c.Name,
-		//              })
-		//              .OrderBy(c => c.Name) // Sắp xếp theo tên
-		//              .ToList(),
-
-		//              ShoppingCart = new()
-		//              {
-		//                  Movie = Movie,
-		//                  Count = 1,
-		//                  MovieId = MovieId ?? 0
-		//              }
-		//          };
-		//          return View(shoppingCartVM);
-		//      }
-
-		//      [HttpPost]
-		//      [Authorize]
-		//      public IActionResult Details(ShoppingCartVM shoppingCartVM)
-		//      {
-		//          var claimsIdentity = (ClaimsIdentity)User.Identity;
-		//          var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-		//          shoppingCartVM.ShoppingCart.ApplicationUserId = userId;
-		//          ShoppingCart cartFromDb =
-		//               _unitOfWork
-		//              .ShoppingCart
-		//              .Get(u => u.ApplicationUserId == userId && u.MovieId == shoppingCartVM.ShoppingCart.MovieId);
-
-		//          if (cartFromDb != null)
-		//          {
-		//              cartFromDb.Count += shoppingCartVM.ShoppingCart.Count;
-		//             // _unitOfWork.ShoppingCart.Update(cartFromDb);
-		//              _unitOfWork.Save();
-		//          }
-		//          else
-		//          {
-		//              _unitOfWork.ShoppingCart.Add(shoppingCartVM.ShoppingCart);
-		//              _unitOfWork.Save();
-		//              HttpContext.Session.SetInt32(SD.SessionCart,
-		//             _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
-		//          }
-
-		//          TempData["success"] = "Cart updated successfully!";
-
-		//          return RedirectToAction(nameof(Index));
-		//      }
-
-
-
+		public IActionResult Details(int? MovieId)
+		{
+			Movie Movie = _unitOfWork.Movie.Get(u => u.Id == MovieId, includeProperties: "MovieCategory");			
+			return View(Movie);
+		}
 	}
 
 

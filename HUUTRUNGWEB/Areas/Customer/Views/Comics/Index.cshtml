@@ -33,8 +33,8 @@
 											</div>
 
 											<div class="btn-container mt-auto">
-												<a href="#" class="btn btn-primary bg-gradient border-0 w-100">
-													Add to cart
+												<a asp-action="Details"  asp-route-comicId="@obj.Id" class="btn btn-primary bg-gradient border-0 w-100">
+													Details
 												</a>
 											</div>
 										</div>
@@ -82,8 +82,8 @@
 											</div>
 
 											<div class="btn-container mt-auto">
-												<a href="#" class="btn btn-primary bg-gradient border-0 w-100">
-													Add to cart
+												<a asp-action="Details" asp-route-comicId="@obj.Id" class="btn btn-primary bg-gradient border-0 w-100">
+													Details
 												</a>
 											</div>
 										</div>
@@ -105,20 +105,25 @@
 	</div>
 </div>
 
+
+
 @* MAIN MENU *@
 <div class="contact-form" style="background-color: rgba(0, 116, 232, 1);">
 	<div class="container my-5 pt-5">
 		<div class="row align-items-center">
 			<!-- Video Section -->
-			<div class="col-md-7">
-				<div class="ratio ratio-16x9">
-					<iframe src="https://www.youtube.com/embed/VdahDEpqPA8" title="Creature Commandos Trailer" allowfullscreen></iframe>
+			@if (Model.MovieMain != null)
+			{
+				<div class="col-md-7">
+					<div class="ratio ratio-16x9">
+						<iframe src="@("https://www.youtube.com/embed/" +
+						Model.MovieMain.UrlVideo)" title="Creature Commandos Trailer" allowfullscreen></iframe>
+					</div>
 				</div>
-			</div>
 
-			<!-- Video Details Section -->
-			<div class="col-md-5 mt-3 textVideo d-flex align-items-center text-white">
-				<div>
+				<!-- Video Details Section -->
+				<div class="col-md-5 mt-3 textVideo d-flex align-items-center text-white">
+					<div>
 					<!-- Bọc nội dung văn bản trong một div để căn giữa theo chiều dọc -->
 					<h3 class="text-uppercase ">FEATURED VIDEO</h3>
 					<h2>CREATURE COMMANDOS – OFFICIAL TRAILER</h2>
@@ -126,9 +131,12 @@
 					<p>From James Gunn, comes the new DC Studios and Max Original Series <em>Creature Commandos</em>. Streaming December 5th, exclusively on Max.</p>
 				</div>
 			</div>
+			}
 		</div>
 	</div>
 </div>
+
+
 @* info-character *@
 <div class="container " style="width:90%">
 	<div class="row">

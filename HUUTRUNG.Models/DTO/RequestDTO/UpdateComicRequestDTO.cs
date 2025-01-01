@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using HUUTRUNG.Models.Domain;
+using HUUTRUNG.Models.DTO.ResponseDTO;
 
-namespace HUUTRUNG_WEBAPI.Model.DTO
+namespace HUUTRUNG.Models.DTO.RequestDTO
 {
     public class UpdateComicRequestDTO
     {

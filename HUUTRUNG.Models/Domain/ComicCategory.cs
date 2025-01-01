@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using HUUTRUNG_WEBAPI.Model.Domain;
+
 
 namespace HUUTRUNG.Models.Domain
 {

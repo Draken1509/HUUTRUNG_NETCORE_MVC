@@ -1,4 +1,4 @@
-﻿namespace HUUTRUNG_WEBAPI.Model.DTO
+﻿namespace HUUTRUNG.Models.DTO.ResponseDTO
 {
     public class SeriesDTO
     {

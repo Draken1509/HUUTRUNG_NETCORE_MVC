@@ -1,20 +1,18 @@
 ﻿using HUUTRUNG.Models.Domain;
-using HUUTRUNG_WEBAPI.Model.DTO;
-using HUUTRUNG_WEBAPI.Repositories;
+using HUUTRUNG.Models.DTO.ResponseDTO;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace HUUTRUNG_WEBAPI.Model.Domain
+namespace HUUTRUNG.Models.DTO.RequestDTO
 {
-    public class ComicDTO
+    public class AddComicRequestDTO
     {
+
 
         public int Id { get; set; }
 
-      
         public string Name { get; set; }
 
         public string? Description { get; set; }
@@ -30,16 +28,10 @@ namespace HUUTRUNG_WEBAPI.Model.Domain
         public int ComicCategoryId { get; set; }
         public int SeriesId { get; set; }
 
-        public Series Series { get; set; }
+        public SeriesDTO Series { get; set; }
         public ComicCategory ComicCategory { get; set; }
-        public List<ComicDTO> RelatedComics { get; set; }
 
-        public List<PageDTO>? Pages { get; set; } // Các trang của truyện tranh
-		public List<CommentDTO>? Comments { get; set; } // Các bình luận của truyện tranh
-		public List<RatingDTO>? Ratings { get; set; } // Các đánh giá của truyện tranh
-        public double? AverageRating { get; set; }
 
-       
 
     }
 }

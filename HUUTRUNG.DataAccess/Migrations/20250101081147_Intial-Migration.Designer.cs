@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HUUTRUNG.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241221171548_Intial")]
-    partial class Intial
+    [Migration("20250101081147_Intial-Migration")]
+    partial class IntialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,41 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Alignment");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Bookmark", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ComicId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCurrentlyReading")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSave")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("SavedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ComicId");
+
+                    b.ToTable("Bookmarks");
                 });
 
             modelBuilder.Entity("HUUTRUNG.Models.Domain.Character", b =>
@@ -138,6 +173,9 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsNew")
                         .HasColumnType("bit");
 
@@ -227,11 +265,17 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("LikeCount")
                         .HasColumnType("int");
 
                     b.Property<int?>("ParentCommentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReplyUserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CommentId");
 
@@ -910,6 +954,21 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("HUUTRUNG.Models.Domain.Bookmark", b =>
+                {
+                    b.HasOne("HUUTRUNG.Models.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("HUUTRUNG.Models.Domain.Comic", "Comic")
+                        .WithMany()
+                        .HasForeignKey("ComicId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Comic");
                 });
 
             modelBuilder.Entity("HUUTRUNG.Models.Domain.Character", b =>

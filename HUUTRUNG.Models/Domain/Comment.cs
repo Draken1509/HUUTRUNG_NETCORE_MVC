@@ -36,5 +36,10 @@ namespace HUUTRUNG.Models.Domain
 		[ValidateNever]
         [ForeignKey("ParentCommentId")]
         public Comment? ParentComment { get; set; } // Bình luận cha
-	}
+
+		public string? ReplyUserName { get; set; }
+
+
+
+    }
 }

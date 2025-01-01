@@ -84,16 +84,20 @@
             <div class="col-md-6">
               <dl class="row">
                 <dt class="col-sm-4">U.S. Price:</dt>
-                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+                    <dd class="col-sm-8">
+                        @(Model.ShoppingCart?.Comic.Price ?? 0)
+                    </dd>
 
                 <dt class="col-sm-4">On Sale Date:</dt>
-                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+                    <dd class="col-sm-8">
+                        @(Model.ShoppingCart?.Comic.OnSaleDate?.ToString("yyyy-MM-dd") ?? "N/A")
+                    </dd>
 
                 <dt class="col-sm-4">Page Count:</dt>
-                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+                    <dd class="col-sm-8">@(Model.ShoppingCart?.Comic.PageCount ?? 0)</dd>
 
                 <dt class="col-sm-4">Rated:</dt>
-                <dd class="col-sm-8">Clark Kent, Kal-El</dd>
+                    <dd class="col-sm-8">@(Model.ShoppingCart?.Comic.Rated ?? "N/A")</dd>
               </dl>
             </div>
         </div>

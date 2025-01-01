@@ -1,8 +1,9 @@
-using AutoMapper;
+﻿using AutoMapper;
 using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.Models.Domain;
-using HUUTRUNG_WEBAPI.Model.Domain;
-using HUUTRUNG_WEBAPI.Model.DTO;
+using HUUTRUNG.Models.DTO.RequestDTO;
+using HUUTRUNG.Models.DTO.ResponseDTO;
+
 using HUUTRUNG_WEBAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore;
 namespace HUUTRUNG_WEBAPI.Controllers
 {
 
+
+    //[Làm cho biết restful API chứ không có ý nghĩa trong project ]
+
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class SeriesController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
@@ -48,7 +51,7 @@ namespace HUUTRUNG_WEBAPI.Controllers
             return Ok(_mapper.Map<SeriesDTO>(seriesDomain));
         }
 
-
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddSeriesRequestDTO addSeriesRequestDTO )
         {
@@ -67,7 +70,8 @@ namespace HUUTRUNG_WEBAPI.Controllers
 
 
         [HttpPut]
-        [Route("{id:int}")]   
+        [Route("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update([FromRoute] int id, UpdateSeriesRequestDTO updateSeriesRequestDTO)
         {
             var seriesDomain = _mapper.Map<Series>(updateSeriesRequestDTO);
@@ -86,7 +90,8 @@ namespace HUUTRUNG_WEBAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Delete([FromRoute] int id)
         {
             //var series = _dbContext.Series.Find(id);
             var seriesDomain = await _seriesRepository.DeleteAsync(id);

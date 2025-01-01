@@ -1,6 +1,6 @@
 ﻿using HUUTRUNG.Models.Domain;
-using HUUTRUNG.Models.DTO;
-using HUUTRUNG_WEBAPI.Model.Domain;
+using HUUTRUNG.Models.DTO.RequestDTO;
+using HUUTRUNG.Models.DTO.ResponseDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HUUTRUNG_WEBAPI.Repositories
@@ -13,15 +13,16 @@ namespace HUUTRUNG_WEBAPI.Repositories
 
        public Task<List<ComicDTO?>> GetLastestComicAsync();
        public Task<List<ComicDTO?>> GetHighestRatingComicAsync();
-       public Task<ComicDTO?> GetByIdAsync(int id);
-       public Task<Comic> CreateAsync(Comic Comic);
-       public Task<Comic> UpdateAsync(int id,Comic Comic);
-       public Task<Comic?> DeleteAsync(int id);
-       public Task<List<PageDTO>> GetPagebyIdAsync(int comicId);
+       public Task<ComicDTO?> GetByIdAsync(int id);      
+       public Task<List<PageDTO>> GetPagebyIdAsync(int comicId);    
+    
 
-       public Task<List<ComicDTO?>> GetSavedComicAsync(string id);
-       public Task<List<ComicDTO?>> GetReadComicAsync(string id);
-       public Task<List<ComicDTO?>> GetCurrentlReadingComicAsync(string id);
-    }
-   
+		#region không sử dụng
+		//public Task<Comic> CreateAsync(Comic Comic);
+		//public Task<Comic> UpdateAsync(int id,Comic Comic);
+		//public Task<Comic?> DeleteAsync(int id);
+		#endregion
+
+	}
+
 }

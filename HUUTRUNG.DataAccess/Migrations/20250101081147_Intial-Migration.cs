@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HUUTRUNG.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Intial : Migration
+    public partial class IntialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -277,6 +277,7 @@ namespace HUUTRUNG.DataAccess.Migrations
                     Rated = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsFree = table.Column<bool>(type: "bit", nullable: false),
                     IsNew = table.Column<bool>(type: "bit", nullable: false),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Updated_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ComicCategoryId = table.Column<int>(type: "int", nullable: true),
@@ -461,6 +462,34 @@ namespace HUUTRUNG.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bookmarks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsSave = table.Column<bool>(type: "bit", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    IsCurrentlyReading = table.Column<bool>(type: "bit", nullable: false),
+                    ComicId = table.Column<int>(type: "int", nullable: true),
+                    SavedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookmarks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookmarks_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookmarks_Comics_ComicId",
+                        column: x => x.ComicId,
+                        principalTable: "Comics",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -468,9 +497,11 @@ namespace HUUTRUNG.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LikeCount = table.Column<int>(type: "int", nullable: true),
+                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ComicId = table.Column<int>(type: "int", nullable: true),
-                    ParentCommentId = table.Column<int>(type: "int", nullable: true)
+                    ParentCommentId = table.Column<int>(type: "int", nullable: true),
+                    ReplyUserName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -637,6 +668,16 @@ namespace HUUTRUNG.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bookmarks_ApplicationUserId",
+                table: "Bookmarks",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookmarks_ComicId",
+                table: "Bookmarks",
+                column: "ComicId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Characters_AlignmentId",
                 table: "Characters",
                 column: "AlignmentId");
@@ -744,6 +785,9 @@ namespace HUUTRUNG.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Bookmarks");
 
             migrationBuilder.DropTable(
                 name: "Characters");

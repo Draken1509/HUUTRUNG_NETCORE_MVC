@@ -170,6 +170,9 @@ namespace HUUTRUNG.DataAccess.Migrations
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsNew")
                         .HasColumnType("bit");
 
@@ -267,6 +270,9 @@ namespace HUUTRUNG.DataAccess.Migrations
 
                     b.Property<int?>("ParentCommentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReplyUserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CommentId");
 

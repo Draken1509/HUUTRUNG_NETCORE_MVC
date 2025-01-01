@@ -124,9 +124,14 @@ namespace HUUTRUNGWEB.Areas.Customer.Controllers
 		{
 			ComicListPagination = pagedComics,
 			TypeComicList = _unitOfWork.ComicCategory.GetAll().ToList(),
-			WriterComicList = _unitOfWork.Comic.GetAll(c => c.Writer != null).Select( c=>c.Writer ).Distinct().ToList(),
+			WriterComicList = _unitOfWork.Comic.GetAll(c => c.Writer != null).Select( c=>c.Writer).Distinct().ToList(),
 		    ComicFreeList = _unitOfWork.Comic.GetAll(c => c.IsFree == true).ToList(),
-			ComicNewList = _unitOfWork.Comic.GetAll(c => c.IsNew == true).ToList(),			           
+			ComicNewList = _unitOfWork.Comic.GetAll(c => c.IsNew == true).ToList(),	
+			MovieMain = _unitOfWork.Movie.GetAll(u => u.IsMain == true)  
+	                                         .OrderBy(u => u.Id)             
+	                                         .Skip(2)                      
+	                                         .Take(1)                        
+	                                         .FirstOrDefault(),
 			ComicList = comicList,							
 		};
 

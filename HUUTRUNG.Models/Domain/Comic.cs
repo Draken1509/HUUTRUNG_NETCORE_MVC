@@ -61,6 +61,7 @@ namespace HUUTRUNG.Models.Domain
         [Display(Name = "Comic New")]
         public bool IsNew { get; set; }
 
+        public bool IsMain { get; set; } = false;
         public DateTime? Created_at { get; set; }
 
         public DateTime? Updated_at { get; set; }

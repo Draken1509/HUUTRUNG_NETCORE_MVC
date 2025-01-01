@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HUUTRUNG_WEBAPI.Model.DTO
+namespace HUUTRUNG.Models.DTO.RequestDTO
 {
     public class LoginRequestDTO
     {
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string Username { get; set; }
+        public string Email { get; set; }
 
 
         [Required]

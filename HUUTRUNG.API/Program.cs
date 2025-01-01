@@ -58,6 +58,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddScoped<ISeriesAPIRepository, SQLSeriesRepository>();
 builder.Services.AddScoped<IComicAPIRepository, SQLComicRepository>();
+builder.Services.AddScoped<IBookmarkAPIRepository, SQLBookmarkRepository>();
+builder.Services.AddScoped<IApplicationUserAPIRepository, SQLApplicationUserRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

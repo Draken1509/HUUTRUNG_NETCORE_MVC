@@ -1,5 +1,5 @@
 ﻿using HUUTRUNG.Models.Domain;
-using HUUTRUNG_WEBAPI.Model.Domain;
+
 
 namespace HUUTRUNG_WEBAPI.Repositories
 {

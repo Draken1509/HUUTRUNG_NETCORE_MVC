@@ -1,10 +1,12 @@
 ﻿using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.Models.Domain;
-using HUUTRUNG.Models.DTO;
-using HUUTRUNG_WEBAPI.Model.Domain;
+using HUUTRUNG.Models.DTO.RequestDTO;
+using HUUTRUNG.Models.DTO.ResponseDTO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
+using System.Threading;
 
 namespace HUUTRUNG_WEBAPI.Repositories
 {
@@ -14,28 +16,8 @@ namespace HUUTRUNG_WEBAPI.Repositories
         private readonly ApplicationDbContext _dbContext; 
         public SQLComicRepository(ApplicationDbContext dbContext)
         {
-            this._dbContext = dbContext;      
-        }
-        public async Task<Comic> CreateAsync(Comic comic)
-        {
-            await _dbContext.Comics.AddAsync(comic);
-            await _dbContext.SaveChangesAsync();
-            return comic;
-        }
-
-        public async Task<Comic> DeleteAsync(int id)
-        {
-            var exstingComic = await _dbContext.Comics.FirstOrDefaultAsync(s => s.Id == id);
-            if (exstingComic == null)
-            {
-                return null;
-            }
-            _dbContext.Comics.Remove(exstingComic);
-            await _dbContext.SaveChangesAsync();
-            return exstingComic;
-        }
-
-
+            _dbContext = dbContext;      
+        }       
         public async Task<ComicPagedDTO> GetAllAsync(string? filterOn = null, string? filterQuery = null,
            [FromQuery] string? sortBy = null, [FromQuery] bool? isAscending = null,
            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
@@ -99,12 +81,11 @@ namespace HUUTRUNG_WEBAPI.Repositories
             };
 
         }
-
-
-
-
         public async Task<List<ComicDTO>> GetLastestComicAsync()
         {
+            // Tính toán lại AverageRating nếu có ratings
+          
+
             return await _dbContext.Comics
                 .AsNoTracking() // Không cần theo dõi thay đổi
                 .Where(comic => comic.IsFree)
@@ -114,7 +95,8 @@ namespace HUUTRUNG_WEBAPI.Repositories
                     Id = comic.Id,
                     Name = comic.Name,
                     Thumbnail = comic.Thumbnail,
-                    AverageRating = comic.AverageRating,
+                    AverageRating = comic.Ratings.Any()? Math.Round((double)comic.Ratings.Average(r => r.Score), 1): 0,
+
                     ComicCategory = comic.ComicCategory, // Nếu cần hiển thị thông tin danh mục
                     ComicCategoryId = comic.ComicCategoryId ?? 0, // Xử lý nếu null
                     OnSaleDate = comic.OnSaleDate
@@ -122,7 +104,6 @@ namespace HUUTRUNG_WEBAPI.Repositories
                 .Take(12) // Lấy 12 kết quả đầu tiên
                 .ToListAsync();
         }
-
         public async Task<List<ComicDTO>> GetHighestRatingComicAsync()
         {
             var comics =  _dbContext.Comics                                        
@@ -143,14 +124,10 @@ namespace HUUTRUNG_WEBAPI.Repositories
                         ComicCategory = comic.ComicCategory,
                         ComicCategoryId = (int)comic.ComicCategoryId,
                         OnSaleDate = comic.OnSaleDate,
-                        AverageRating = comic.Ratings.Any() ? comic.Ratings.Average(r => r.Score)
-                                        : 0
+                        AverageRating = comic.Ratings.Any() ? Math.Round((double)comic.Ratings.Average(r => r.Score), 1) : 0,
                     })
                     .ToListAsync();
-        }
-
-
-
+        }     
         public async Task<ComicDTO?> GetByIdAsync(int id)
         {
             var comic = await _dbContext.Comics
@@ -170,21 +147,30 @@ namespace HUUTRUNG_WEBAPI.Repositories
                     PageNumber = p.PageNumber
                 }).ToListAsync();
 
-            // Lấy danh sách các comment
-            var comments = await _dbContext.Comments
+            // Lấy tất cả các comment (không phân biệt cấp độ)
+            var allComments = await _dbContext.Comments
                 .Where(c => c.ComicId == id)
+                .Include(c => c.Replies)                
                 .Select(c => new CommentDTO
                 {
                     CommentId = c.CommentId,
                     Content = c.Content,
                     LikeCount = c.LikeCount,
+                    CreateAt = c.CreateAt,
                     ApplicationUser = new ApplicationUserDTO
                     {
                         Id = c.ApplicationUser.Id,
                         UserName = c.ApplicationUser.UserName
-                    }
+                    },
+
+                    ParentCommentId = c.ParentCommentId,
+                    ReplyUserName = c.ParentComment.ApplicationUser.UserName,
+                    Replies = new List<CommentDTO>()
                 })
                 .ToListAsync();
+
+            // Build the replies tree
+            var comments = BuildCommentHierarchy(allComments);
 
             // Lấy danh sách các rating
             var ratings = await _dbContext.Ratings
@@ -197,8 +183,10 @@ namespace HUUTRUNG_WEBAPI.Repositories
 
             // Tính toán lại AverageRating nếu có ratings
             var averageRating = ratings.Any()
-                ? ratings.Average(r => r.Score)
-                : 0;
+                      ? Math.Round((decimal)ratings.Average(r => r.Score), 1) // Làm tròn về 1 chữ số thập phân
+                      : 0m; // Đảm bảo sử dụng 0m cho kiểu decimal
+
+
 
             // Lấy danh sách các comic liên quan
             var relatedComics = await _dbContext.Comics
@@ -212,42 +200,44 @@ namespace HUUTRUNG_WEBAPI.Repositories
             // Trả về ComicDTO
             return new ComicDTO
             {
+
                 Id = comic.Id,
                 Name = comic.Name,
                 Description = comic.Description,
                 Thumbnail = comic.Thumbnail,
                 Series = comic.Series,
                 ComicCategory = comic.ComicCategory,
-                AverageRating = averageRating,  // Gán giá trị tính lại nếu cần
+                AverageRating = (double)averageRating,
                 Pages = pages,
                 Comments = comments,
                 Ratings = ratings,
                 RelatedComics = relatedComics
             };
-        }
-
-
-        public async Task<Comic> UpdateAsync(int id, Comic Comic)
+        }        
+        private List<CommentDTO> BuildCommentHierarchy(List<CommentDTO> allComments)
         {
-            var existingComic = await _dbContext.Comics.Include(x => x.Series).Include(x => x.ComicCategory).FirstOrDefaultAsync(x => x.Id == id);
-            if (existingComic == null)
+            var commentDict = allComments.ToDictionary(c => c.CommentId);
+            var rootComments = new List<CommentDTO>();
+
+            foreach (var comment in allComments)
             {
-                return null;
+                if (comment.ParentCommentId == null || comment.ParentCommentId == comment.CommentId ) // Bình luận gốc
+                {
+                    rootComments.Add(comment);
+                }
+                else
+                {
+                    // Tìm bình luận cha và thêm vào danh sách replies
+                    if (commentDict.ContainsKey(comment.ParentCommentId.Value))
+                    {
+                        var parentComment = commentDict[comment.ParentCommentId.Value];
+                        parentComment.Replies.Add(comment);
+                    }
+                }
             }
 
-            existingComic.Name = Comic.Name;
-            existingComic.Description = Comic.Description;
-            existingComic.Writer = Comic.Writer;
-            existingComic.Thumbnail = Comic.Thumbnail;
-            existingComic.ArtBy = Comic.ArtBy;
-            existingComic.Cover = Comic.Cover;
-            existingComic.Colorist = Comic.Colorist;
-            existingComic.ComicCategoryId = Comic.ComicCategoryId;
-            existingComic.SeriesId = Comic.SeriesId;
-
-            await _dbContext.SaveChangesAsync();
-            return existingComic;
-        }
+            return rootComments;
+        }     
         public async Task<List<PageDTO>> GetPagebyIdAsync(int comicId)
         {
             return await _dbContext.Pages
@@ -259,63 +249,49 @@ namespace HUUTRUNG_WEBAPI.Repositories
                     PageNumber = p.PageNumber
                 })
                 .ToListAsync();
-        }
+        }     
+    
 
-        public async Task<List<ComicDTO>> GetSavedComicAsync(string id)
-        {
-            return await _dbContext.Bookmarks
-                .AsNoTracking()
-                .Where(b => b.ApplicationUserId == id && b.IsSave == true) // Lọc theo UserId
-                .Select(b => new ComicDTO
-                {
-                    Id = b.Comic.Id, // Liên kết tới bảng Comics qua Bookmark
-                    Name = b.Comic.Name,
-                    Thumbnail = b.Comic.Thumbnail,
-                    AverageRating = b.Comic.AverageRating,
-                    ComicCategory = b.Comic.ComicCategory,
-                    ComicCategoryId = b.Comic.ComicCategoryId ?? 0,
-                    OnSaleDate = b.Comic.OnSaleDate
-                })
-                .ToListAsync();
-        }
+		#region Không sử dụng
+		public async Task<Comic> UpdateAsync(int id, Comic Comic)
+		{
+			var existingComic = await _dbContext.Comics.Include(x => x.Series).Include(x => x.ComicCategory).FirstOrDefaultAsync(x => x.Id == id);
+			if (existingComic == null)
+			{
+				return null;
+			}
 
+			existingComic.Name = Comic.Name;
+			existingComic.Description = Comic.Description;
+			existingComic.Writer = Comic.Writer;
+			existingComic.Thumbnail = Comic.Thumbnail;
+			existingComic.ArtBy = Comic.ArtBy;
+			existingComic.Cover = Comic.Cover;
+			existingComic.Colorist = Comic.Colorist;
+			existingComic.ComicCategoryId = Comic.ComicCategoryId;
+			existingComic.SeriesId = Comic.SeriesId;
 
-        public async Task<List<ComicDTO>> GetReadComicAsync(string id)
-        {
-            return await _dbContext.Bookmarks
-               .AsNoTracking()
-               .Where(b => b.ApplicationUserId == id && b.Comic != null && b.IsRead==true ) 
-               .Select(b => new ComicDTO
-               {
-                   Id = b.Comic!.Id, 
-                   Name = b.Comic.Name,
-                   Thumbnail = b.Comic.Thumbnail,
-                   AverageRating = b.Comic.AverageRating,
-                   ComicCategory = b.Comic.ComicCategory,
-                   ComicCategoryId = b.Comic.ComicCategoryId ?? 0,
-                   OnSaleDate = b.Comic.OnSaleDate
-               })
-               .ToListAsync();
-        }
+			await _dbContext.SaveChangesAsync();
+			return existingComic;
+		}
+		public async Task<Comic> CreateAsync(Comic comic)
+		{
+			await _dbContext.Comics.AddAsync(comic);
+			await _dbContext.SaveChangesAsync();
+			return comic;
+		}
+		public async Task<Comic> DeleteAsync(int id)
+		{
+			var exstingComic = await _dbContext.Comics.FirstOrDefaultAsync(s => s.Id == id);
+			if (exstingComic == null)
+			{
+				return null;
+			}
+			_dbContext.Comics.Remove(exstingComic);
+			await _dbContext.SaveChangesAsync();
+			return exstingComic;
+		}
+		#endregion
 
-        public async Task<List<ComicDTO>> GetCurrentlReadingComicAsync(string id)
-        {
-            return await _dbContext.Bookmarks
-                .AsNoTracking()
-                .Where(b => b.ApplicationUserId == id && b.IsCurrentlyReading == true) // Lọc theo UserId
-                .Select(b => new ComicDTO
-                {
-                    Id = b.Comic.Id, // Liên kết tới bảng Comics qua Bookmark
-                    Name = b.Comic.Name,
-                    Thumbnail = b.Comic.Thumbnail,
-                    AverageRating = b.Comic.AverageRating,
-                    ComicCategory = b.Comic.ComicCategory,
-                    ComicCategoryId = b.Comic.ComicCategoryId ?? 0,
-                    OnSaleDate = b.Comic.OnSaleDate
-                })
-                .ToListAsync();
-        }
-
-       
-    }
+	}
 }

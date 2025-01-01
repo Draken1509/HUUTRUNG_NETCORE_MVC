@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using HUUTRUNG.DataAccess.Data;
 using HUUTRUNG.Models.Domain;
+using HUUTRUNG.Models.DTO.RequestDTO;
+using HUUTRUNG.Models.DTO.ResponseDTO;
 using HUUTRUNG.Utility;
 using HUUTRUNG_WEBAPI.CustomActionFilters;
-
-using HUUTRUNG_WEBAPI.Model.Domain;
-using HUUTRUNG_WEBAPI.Model.DTO;
 using HUUTRUNG_WEBAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +12,62 @@ using Microsoft.AspNetCore.Mvc;
 namespace HUUTRUNG_WEBAPI.Controllers
 {
 
+	#region không sử dụng
+	//[HttpDelete]
+	//[Authorize(Roles = "Writer")]
+	//[Route("{id:int}")]
+	//public async Task<IActionResult> Delete([FromRoute] int id)
+	//{
+	//	//var Comic = _dbContext.Comic.Find(id);
+	//	var ComicDomain = await _ComicRepository.DeleteAsync(id);
 
-    [Route("api/[controller]")]
+	//	if (ComicDomain == null)
+	//	{
+	//		return NotFound();
+	//	}
+	//	var ComicDTO = _mapper.Map<ComicDTO>(ComicDomain);
+	//	return Ok(ComicDTO);
+	//}
+
+	//[Route("{id:int}")]
+	//public async Task<IActionResult> Update([FromRoute] int id, UpdateComicRequestDTO updateComicRequestDTO)
+	//{
+	//	var ComicDomain = _mapper.Map<Comic>(updateComicRequestDTO);
+
+	//	ComicDomain = await _ComicRepository.UpdateAsync(id, ComicDomain);
+
+	//	if (ComicDomain == null)
+	//	{
+	//		return NotFound();
+	//	}
+
+	//	var ComicDTO = _mapper.Map<ComicDTO>(ComicDomain);
+	//	return Ok(ComicDTO);
+	//}
+	////[ValidateModel]
+	//// [Authorize(Roles = "Writer")]
+	//[HttpPost]
+	//public async Task<IActionResult> Create([FromBody] AddComicRequestDTO addComicRequestDTO)
+	//{
+
+	//	//Map or covert DTO to Domain
+	//	var ComicDomain = _mapper.Map<Comic>(addComicRequestDTO);
+
+	//	//use Domain Model to create Comic
+	//	ComicDomain = await _ComicRepository.CreateAsync(ComicDomain);
+
+	//	//Map Domain model back to DTO
+	//	var ComicDTO = _mapper.Map<ComicDTO>(ComicDomain);
+	//	return Ok(ComicDTO);
+
+	//}
+	// E46D4C92-2F7B-4BC6-A746-461F96C6544B
+	// F3041C35-7C48-4A2D-81E4-7F881E715DB3
+
+
+	#endregion
+
+	[Route("api/[controller]")]
     [ApiController]  
     public class ComicController : ControllerBase
     {
@@ -24,9 +77,9 @@ namespace HUUTRUNG_WEBAPI.Controllers
         public ComicController(ApplicationDbContext dbContext, IComicAPIRepository ComicRepository,
             IMapper mapper)
         {
-            this._dbContext = dbContext;
-            this._ComicRepository = ComicRepository;
-            this._mapper = mapper;
+            _dbContext = dbContext;
+            _ComicRepository = ComicRepository; 
+            _mapper = mapper;
         }
 
         // GET -https://localhost:????/api/comic
@@ -53,29 +106,9 @@ namespace HUUTRUNG_WEBAPI.Controllers
             var listComicDTO = await _ComicRepository.GetHighestRatingComicAsync();
             return Ok(listComicDTO);
         }
-
-        [HttpGet("saved/{id}")]
-        public async Task<IActionResult> GetSavedComic([FromRoute]  string id)    
-        {
-            var listComicDTO = await _ComicRepository.GetSavedComicAsync(id);
-            return Ok(listComicDTO);
-        }
-        [HttpGet("read/{id}")]
-        public async Task<IActionResult> GetReadComic([FromRoute] string id)
-        {
-            var listComicDTO = await _ComicRepository.GetReadComicAsync(id);
-            return Ok(listComicDTO);
-        }
-        [HttpGet("currently-reading/{id}")]
-        public async Task<IActionResult> GetCurrentlReadingComic([FromRoute] string id)
-        {
-            var listComicDTO = await _ComicRepository.GetCurrentlReadingComicAsync(id);
-            return Ok(listComicDTO);
-        }
-        //------
+      
         [HttpGet]
-        [Route("{id:int}")]
-        //[Authorize(Roles = "Reader")]
+        [Route("{id:int}")]      
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             //var Comic = _dbContext.Comic.Find(id);
@@ -86,7 +119,6 @@ namespace HUUTRUNG_WEBAPI.Controllers
             }
             return Ok(ComicDTO);
         }
-
 
         [HttpGet("page/{id:int}")]        
         public async Task<IActionResult> GetPageById([FromRoute] int id)
@@ -99,63 +131,7 @@ namespace HUUTRUNG_WEBAPI.Controllers
             }
             return Ok(PageDTO);
         }
-
-        //[ValidateModel]
-        // [Authorize(Roles = "Writer")]
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AddComicRequestDTO addComicRequestDTO)
-        {
-           
-                //Map or covert DTO to Domain
-                var ComicDomain = _mapper.Map<Comic>(addComicRequestDTO);
-
-                //use Domain Model to create Comic
-                ComicDomain = await _ComicRepository.CreateAsync(ComicDomain);
-
-                //Map Domain model back to DTO
-                var ComicDTO = _mapper.Map<ComicDTO>(ComicDomain);
-                return Ok(ComicDTO);            
-            
-        }
-        // E46D4C92-2F7B-4BC6-A746-461F96C6544B
-        // F3041C35-7C48-4A2D-81E4-7F881E715DB3
-
-
-        [HttpPut]
-        //[Authorize(Roles = "Writer")]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, UpdateComicRequestDTO updateComicRequestDTO)
-        {
-            var ComicDomain = _mapper.Map<Comic>(updateComicRequestDTO);
-     
-            ComicDomain = await _ComicRepository.UpdateAsync(id, ComicDomain);
-
-            if (ComicDomain == null)
-            {
-                return NotFound();
-            }
-
-            var ComicDTO = _mapper.Map<ComicDTO>(ComicDomain);
-            return Ok(ComicDTO);
-        }
-
-        [HttpDelete]
-        [Authorize(Roles = "Writer")]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            //var Comic = _dbContext.Comic.Find(id);
-            var ComicDomain = await _ComicRepository.DeleteAsync(id);
-
-            if (ComicDomain == null)
-            {
-                return NotFound();
-            }
-            var ComicDTO = _mapper.Map<ComicDTO>(ComicDomain);
-            return Ok(ComicDTO);
-        }
-
-
+                  
     }
    
 }
